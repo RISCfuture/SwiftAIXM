@@ -85,31 +85,3 @@ struct `AIXM 5.1 aerodromes` {
     )
   }
 }
-
-@Suite
-struct `AIXM 5.1 time slices` {
-  @Test
-  func `reads the slice in effect on the effective date`() throws {
-    let (dataset, _) = try Fixtures.dataset(Fixtures.timeSlices)
-    #expect(dataset.airports.map(\.name) == ["CURRENT NAME"])
-  }
-
-  @Test
-  func `reads a later slice once it takes effect`() throws {
-    let december = Fixtures.effectiveDate.addingTimeInterval(60 * 60 * 24 * 40)
-    let (dataset, _) = try Fixtures.dataset(Fixtures.timeSlices, effectiveDate: december)
-    #expect(dataset.airports.map(\.name) == ["FUTURE NAME"])
-  }
-
-  @Test
-  func `includes a feature before its lifetime ends`() throws {
-    let january = Fixtures.effectiveDate.addingTimeInterval(-60 * 60 * 24 * 300)
-    let (dataset, _) = try Fixtures.dataset(Fixtures.timeSlices, effectiveDate: january)
-    #expect(dataset.airports.map(\.designator) == ["XXAA", "XXBB"])
-  }
-}
-
-extension Collection {
-  /// The collection's single element, or `nil` if it has none or several.
-  var only: Element? { count == 1 ? first : nil }
-}

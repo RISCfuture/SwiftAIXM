@@ -33,11 +33,54 @@ enum Fixtures {
     return (dataset, errors)
   }
 
+  /// Reads a document written in a test, collecting the record errors it reports.
+  static func dataset(
+    document: String,
+    effectiveDate: Date = effectiveDate
+  ) throws -> (dataset: AIXMDataset, problems: [RecordProblem]) {
+    var problems = [RecordProblem]()
+    let dataset = try AIXMDataset(data: Data(document.utf8), effectiveDate: effectiveDate) {
+      problems.append(RecordProblem($0))
+    }
+    return (dataset, problems)
+  }
+
   enum FixtureError: Error {
     case missing(String)
   }
 }
 
-extension Measurement where UnitType == UnitLength {
-  func meters() -> Double { converted(to: .meters).value }
+/// A record error reported through the error callback, in a form tests can compare.
+enum RecordProblem: Equatable, CustomStringConvertible {
+  case missing(feature: String, id: String, field: String)
+  case invalid(feature: String, id: String, field: String, value: String)
+  case unresolved(feature: String, id: String, reference: String)
+  case unexpected(String)
+
+  var description: String {
+    switch self {
+      case let .missing(feature, id, field): "\(feature) \(id) has no \(field)"
+      case let .invalid(feature, id, field, value): "\(feature) \(id) has \(field) = \(value)"
+      case let .unresolved(feature, id, reference): "\(feature) \(id) refers to \(reference)"
+      case .unexpected(let error): error
+    }
+  }
+
+  init(_ error: any Error) {
+    switch error as? AIXMRecordError {
+      case let .missingValue(feature, id, field):
+        self = .missing(feature: feature, id: id, field: field)
+      case let .invalidValue(feature, id, field, value):
+        self = .invalid(feature: feature, id: id, field: field, value: value)
+      case let .unresolvedReference(feature, id, reference):
+        self = .unresolved(feature: feature, id: id, reference: reference)
+      case nil:
+        self = .unexpected(String(describing: error))
+    }
+  }
+}
+
+extension Collection {
+  /// The collection's single element, or `nil` if it has none or several.
+  var only: Element? { count == 1 ? first : nil }
 }
