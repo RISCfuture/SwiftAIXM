@@ -36,18 +36,12 @@ struct AIRACCycle: Comparable, CustomStringConvertible {
     return Self.twoDigits(year % Self.yearDigits) + Self.twoDigits(number)
   }
 
-  /// The effective date as `YYYY-MM-DD`.
-  var effectiveDateString: String {
-    effectiveDate.formatted(.iso8601.year().month().day())
-  }
-
   /// The effective date as `YYYYMMDD`, as NATS writes it in file names.
   var compactEffectiveDate: String {
     effectiveDate.formatted(.iso8601.year().month().day().dateSeparator(.omitted))
   }
 
   var next: Self { Self(index: index + 1) }
-  var previous: Self { Self(index: index - 1) }
 
   var description: String { identifier }
 

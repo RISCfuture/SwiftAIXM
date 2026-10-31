@@ -19,8 +19,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
-      - uses: SwiftyLab/setup-swift@d60245579ea3836a3f2fa65ebbe1e8891d577c76 # v1.14.2
+      - uses: actions/checkout@v7
+      - uses: SwiftyLab/setup-swift@d60245579ea3836a3f2fa65ebbe1e8891d577c76  # v1.14.2
         with:
           swift-version: "6.2"
       - name: Cache SwiftPM build products

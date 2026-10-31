@@ -1,0 +1,418 @@
+name: AIRAC Watch
+
+# Each 28-day AIRAC cycle, the live data sets are parsed end to end, so that a code the library does
+# not know, a renamed element, or a region that quietly empties is caught before anyone depends on
+# that cycle. NATS links its data sets weeks before they take effect and open flightmaps publishes
+# its snapshots shortly before, so the watch checks the next cycle as soon as every source has it,
+# and the cycle in effect otherwise. The report artifact, named for the cycle, doubles as the record
+# of what has already been checked.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      cycle:
+        description: "AIRAC cycle to check, such as 2611. Blank checks the newest one published."
+        required: false
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    name: Look for a new cycle
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      actions: read
+    outputs:
+      cycle: ${{ steps.decide.outputs.cycle }}
+      effective-date: ${{ steps.decide.outputs.effective-date }}
+      previous-cycle: ${{ steps.decide.outputs.previous-cycle }}
+      parse: ${{ steps.decide.outputs.parse }}
+    steps:
+      - name: Resolve the cycles
+        id: cycles
+        env:
+          REQUESTED: ${{ inputs.cycle }}
+        run: |
+          set -euo pipefail
+
+          # Cycle 2001 took effect on 2020-01-02, and every cycle since 28 days after the last. A
+          # cycle's identifier is its year's last two digits and its number within that year.
+          datum=$(date -u -d 2020-01-02 +%s)
+          period=$(( 28 * 86400 ))
+
+          effective() { echo $(( datum + $1 * period )); }
+          first_of_year() {
+            local new_year
+            new_year=$(date -u -d "$1-01-01" +%s)
+            echo $(( (new_year - datum + period - 1) / period ))
+          }
+          identifier() {
+            local year
+            year=$(date -u -d "@$(effective "$1")" +%Y)
+            printf '%s%02d' "${year:2:2}" $(( $1 - $(first_of_year "$year") + 1 ))
+          }
+          describe() {
+            echo "$2=$(identifier "$1")"
+            echo "$2-date=$(date -u -d "@$(effective "$1")" +%F)"
+            echo "$2-compact=$(date -u -d "@$(effective "$1")" +%Y%m%d)"
+            echo "$2-age=$(( ($(date -u +%s) - $(effective "$1")) / 86400 ))"
+          }
+
+          current=$(( ($(date -u +%s) - datum) / period ))
+          if [ -n "$REQUESTED" ]; then
+            if ! [[ "$REQUESTED" =~ ^[0-9]{4}$ ]]; then
+              echo "::error::'$REQUESTED' is not an AIRAC cycle identifier, such as 2611."
+              exit 1
+            fi
+            requested=$(( $(first_of_year "20${REQUESTED:0:2}") + 10#${REQUESTED:2:2} - 1 ))
+            if [ "$(identifier "$requested")" != "$REQUESTED" ]; then
+              echo "::error::There is no AIRAC cycle $REQUESTED."
+              exit 1
+            fi
+            current=$requested
+          fi
+
+          {
+            describe "$current" current
+            describe $(( current + 1 )) next
+            echo "previous-of-current=$(identifier $(( current - 1 )))"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Check which cycles every source has published
+        id: availability
+        env:
+          CURRENT: ${{ steps.cycles.outputs.current }}
+          CURRENT_COMPACT: ${{ steps.cycles.outputs.current-compact }}
+          NEXT: ${{ steps.cycles.outputs.next }}
+          NEXT_COMPACT: ${{ steps.cycles.outputs.next-compact }}
+        run: |
+          set -euo pipefail
+
+          # The open flightmaps regions SwiftAIXM_E2E downloads; keep in step with
+          # LiveSource.openFlightmapsRegions.
+          regions="ebbu ed efin ehaa ekdk epww esaa fa fywh lbsr ldzo lf lggg lhcc li ljla lkaa lmmm
+                   lovv lrbb lsas lzbb"
+
+          curl --silent --show-error --location --retry 3 --retry-delay 10 --retry-all-errors \
+            --output nats.html \
+            https://nats-uk.ead-it.com/cms-nats/opencms/en/Publications/digital-datasets/ || : > nats.html
+
+          # Prints the sources that have not published the cycle, one per line.
+          missing() {
+            local cycle=$1 compact=$2 region url code
+            for region in $regions; do
+              url="https://snapshots.openflightmaps.org/live/$cycle/ofmx/$region/latest/isolated"
+              code=$(curl --silent --head --location --retry 3 --retry-delay 5 --retry-all-errors \
+                --output /dev/null --write-out '%{http_code}' "$url/ofmx_${region:0:2}.ofmx" \
+                || echo 000)
+              [ "$code" = "200" ] || echo "ofmx/$region (HTTP $code)"
+            done
+            grep -q "EG_AIP_DS_${compact}_XML\.zip" nats.html || echo "uk/aip (not linked)"
+            grep -q "EG_OBS_DS_AREA1_FULL_${compact}_XML\.zip" nats.html || echo "uk/obstacles (not linked)"
+          }
+
+          {
+            echo "current-missing<<EOF"
+            missing "$CURRENT" "$CURRENT_COMPACT"
+            echo "EOF"
+            echo "next-missing<<EOF"
+            missing "$NEXT" "$NEXT_COMPACT"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Decide whether to parse
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          REQUESTED: ${{ inputs.cycle }}
+          CURRENT: ${{ steps.cycles.outputs.current }}
+          CURRENT_DATE: ${{ steps.cycles.outputs.current-date }}
+          CURRENT_AGE: ${{ steps.cycles.outputs.current-age }}
+          CURRENT_MISSING: ${{ steps.availability.outputs.current-missing }}
+          PREVIOUS_OF_CURRENT: ${{ steps.cycles.outputs.previous-of-current }}
+          NEXT: ${{ steps.cycles.outputs.next }}
+          NEXT_DATE: ${{ steps.cycles.outputs.next-date }}
+          NEXT_MISSING: ${{ steps.availability.outputs.next-missing }}
+        run: |
+          set -euo pipefail
+
+          note() { echo "$1"; echo "$1" >> "$GITHUB_STEP_SUMMARY"; }
+          choose() {
+            {
+              echo "cycle=$1"
+              echo "effective-date=$2"
+              echo "previous-cycle=$3"
+              echo "parse=$4"
+            } >> "$GITHUB_OUTPUT"
+          }
+
+          # A source still missing a few days into the cycle it should have published is a problem
+          # in its own right. The cycle is parsed anyway, so the report names what was missing.
+          grace_days=3
+
+          if [ -n "$REQUESTED" ]; then
+            note "Checking cycle $CURRENT on request."
+            choose "$CURRENT" "$CURRENT_DATE" "$PREVIOUS_OF_CURRENT" true
+            exit 0
+          fi
+
+          if [ -z "$NEXT_MISSING" ]; then
+            cycle=$NEXT date=$NEXT_DATE previous=$CURRENT
+          elif [ -z "$CURRENT_MISSING" ] || [ "$CURRENT_AGE" -ge "$grace_days" ]; then
+            cycle=$CURRENT date=$CURRENT_DATE previous=$PREVIOUS_OF_CURRENT
+          else
+            note "Cycle $CURRENT took effect $CURRENT_AGE day(s) ago and is not yet published everywhere."
+            choose "$CURRENT" "$CURRENT_DATE" "$PREVIOUS_OF_CURRENT" false
+            exit 0
+          fi
+
+          # An existing report artifact is the record that this cycle was already checked.
+          artifact="airac-report-$cycle"
+          found=$(ARTIFACT="$artifact" gh api \
+            "repos/$GH_REPO/actions/artifacts?name=$artifact&per_page=100" \
+            --jq '[.artifacts[] | select(.name == env.ARTIFACT and .expired == false)] | length')
+
+          if [ "$found" -gt 0 ]; then
+            note "Cycle $cycle has already been checked."
+            choose "$cycle" "$date" "$previous" false
+          else
+            note "Cycle $cycle (effective $date) is new."
+            choose "$cycle" "$date" "$previous" true
+          fi
+
+  parse:
+    name: Parse the cycle
+    needs: probe
+    if: needs.probe.outputs.parse == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+      issues: write
+    env:
+      CYCLE: ${{ needs.probe.outputs.cycle }}
+      EFFECTIVE_DATE: ${{ needs.probe.outputs.effective-date }}
+      PREVIOUS_CYCLE: ${{ needs.probe.outputs.previous-cycle }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Name the report and the log
+        run: |
+          set -euo pipefail
+          {
+            echo "REPORT=$RUNNER_TEMP/report.json"
+            echo "PARSE_LOG=$RUNNER_TEMP/parse.log"
+          } >> "$GITHUB_ENV"
+
+      - uses: SwiftyLab/setup-swift@d60245579ea3836a3f2fa65ebbe1e8891d577c76  # v1.14.2
+        with:
+          swift-version: "6.4"
+
+      - name: Cache SwiftPM build products
+        # Usually misses: 28 days between runs is well past the seven-day idle eviction. It earns
+        # its place when a cycle is re-checked by hand after a fix.
+        uses: actions/cache@v6
+        with:
+          path: |
+            .build
+            ~/.cache/org.swift.swiftpm
+          key: swiftpm-airacwatch-ubuntu-latest-swift6.4-${{ hashFiles('Package.resolved') }}
+
+      - name: Build
+        run: swift build -c release --product SwiftAIXM_E2E
+
+      - name: Fetch the previous cycle's report
+        id: baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ARTIFACT: airac-report-${{ needs.probe.outputs.previous-cycle }}
+        run: |
+          set -euo pipefail
+
+          # download-artifact cannot reach another run's artifact without that run's id, which is
+          # itself state to keep somewhere; the name already carries the cycle.
+          id=$(gh api "repos/$GH_REPO/actions/artifacts?name=$ARTIFACT&per_page=100" \
+            --jq '[.artifacts[] | select(.name == env.ARTIFACT and .expired == false)]
+                  | max_by(.id) | .id // empty')
+
+          if [ -z "$id" ]; then
+            echo "No report for $PREVIOUS_CYCLE; this cycle becomes the baseline for the next one."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          gh api "repos/$GH_REPO/actions/artifacts/$id/zip" > previous.zip
+          unzip -o -q previous.zip -d previous
+
+          # A run that crashed before writing its report still uploaded its log, so the artifact
+          # existing does not mean there is anything to compare against.
+          if [ -f previous/report.json ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "The report for $PREVIOUS_CYCLE holds nothing to compare; the comparison is skipped."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Parse the cycle
+        id: parse
+        env:
+          BASELINE_FOUND: ${{ steps.baseline.outputs.found }}
+        run: |
+          set -euo pipefail
+
+          args=(--cycle "$CYCLE" --working-directory "$RUNNER_TEMP/aixm" --report "$REPORT")
+          if [ "$BASELINE_FOUND" = "true" ]; then
+            args+=(--baseline previous/report.json)
+          fi
+
+          # The exit code is captured, not propagated: the report still has to be uploaded,
+          # summarized, and turned into an issue.
+          status=0
+          .build/release/SwiftAIXM_E2E "${args[@]}" 2>&1 | tee "$PARSE_LOG" || status=$?
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+
+      - name: Upload the report
+        # Uploaded before anything reads it, and on failure too: this artifact is also the record
+        # that the cycle was checked, so a broken cycle is reported once rather than every day.
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: airac-report-${{ needs.probe.outputs.cycle }}
+          path: |
+            ${{ runner.temp }}/report.json
+            ${{ runner.temp }}/parse.log
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Read the verdict out of the report
+        id: verdict
+        if: always()
+        run: |
+          set -euo pipefail
+
+          drift=0
+          if [ -f "$REPORT" ]; then
+            drift=$(jq '.drift | length' "$REPORT")
+          fi
+          echo "drift=$drift" >> "$GITHUB_OUTPUT"
+
+      - name: Write the report as Markdown
+        if: always()
+        run: |
+          set -euo pipefail
+
+          # Everything taken from a data set is quoted as code with backticks and pipes removed, so
+          # it can neither break a table nor be read as a mention or a link.
+          jq -r --arg previous "$PREVIOUS_CYCLE" '
+            def quoted: tostring | gsub("[`|\r\n]"; " ") | if . == "" then "" else "`\(.)`" end;
+            def groups($title; $list):
+              if ($list | length) == 0 then empty else
+                "### \($title)", "",
+                "| Kind | Feature | Field | Value | Count | Sources | Samples |",
+                "|---|---|---|---|---:|---|---|",
+                ($list[] | "| \(.kind) | \(.feature | quoted) | \(.field // "" | quoted)"
+                  + " | \(.value // "" | quoted) | \(.count)"
+                  + " | \(.sources | join(", ") | quoted)"
+                  + " | \((.sampleValues + .sampleRecords)[:3] | join(", ") | quoted) |"),
+                ""
+              end;
+            "- Effective: \(.effectiveDate)",
+            "- Outcome: \(if .failed then "**failed**" else "clean" end)",
+            (.failureReasons[] | "  - \(quoted)"),
+            "",
+            groups(if .baselineCycle then "Record errors not seen in \(.baselineCycle)"
+                   else "Record errors (no baseline to compare against)" end; .newErrorGroups),
+            (if (.drift | length) > 0 then
+              "### Count drift against \($previous)", "",
+              "| Source | Measure | \($previous) | This cycle | Reason |",
+              "|---|---|---:|---:|---|",
+              (.drift[] | "| \(.source) | \(.measure) | \(.was) | \(.now // "missing") | \(.reason) |"),
+              ""
+             else empty end),
+            "### Sources", "",
+            "| Source | Format | Aerodromes | Directions | Obstacles | Record errors | Failure |",
+            "|---|---|---:|---:|---:|---:|---|",
+            (.sources | to_entries[] | .value as $s
+              | "| \(.key) | \($s.format // "-") | \($s.counts.airports // "-")"
+                + " | \($s.counts.runwayDirections // "-") | \($s.counts.obstacles // "-")"
+                + " | \($s.recordErrors) | \($s.failure // "" | quoted) |"),
+            "",
+            groups("Every record error"; .errorGroups)
+          ' "$REPORT" > "$RUNNER_TEMP/report.md" 2>/dev/null || {
+            echo "The run produced no report. The tail of its log:"
+            echo
+            echo '```'
+            tail -c 8000 "$PARSE_LOG" 2>/dev/null | tr -d '`' || echo "No log was produced either."
+            echo '```'
+          } > "$RUNNER_TEMP/report.md"
+
+          {
+            echo "## AIRAC cycle $CYCLE"
+            echo
+            cat "$RUNNER_TEMP/report.md"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open or update the cycle's issue
+        # Drift files an issue as readily as a new error: a region that quietly empties produces no
+        # errors at all, so the count comparison is the only thing that would ever mention it.
+        if: >-
+          always() && steps.parse.outcome != 'skipped'
+          && (steps.parse.outputs.status != '0' || steps.verdict.outputs.drift != '0')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+
+          {
+            echo "The end-to-end check of AIRAC cycle **$CYCLE** (effective $EFFECTIVE_DATE) found"
+            echo "problems."
+            echo
+            echo "[View the run]($RUN_URL) - the \`airac-report-$CYCLE\` artifact holds the full"
+            echo "report and the tool's log."
+            echo
+            cat "$RUNNER_TEMP/report.md"
+          } > issue-body.md
+
+          # The title is a function of the cycle alone, which is what keeps a re-check idempotent.
+          # The search omits the punctuation so GitHub's query parser cannot read it as a qualifier.
+          title="AIRAC cycle $CYCLE: end-to-end check failed"
+          number=$(TITLE="$title" gh issue list --state all --search "AIRAC cycle $CYCLE in:title" \
+            --json number,title --jq 'map(select(.title == env.TITLE)) | .[0].number // empty')
+
+          if [ -n "$number" ]; then
+            gh issue reopen "$number" >/dev/null 2>&1 || true
+            gh issue comment "$number" --body-file issue-body.md
+          else
+            gh issue create --title "$title" --body-file issue-body.md
+          fi
+
+      - name: Annotate the outcome
+        if: always() && steps.parse.outcome != 'skipped'
+        env:
+          STATUS: ${{ steps.parse.outputs.status }}
+          DRIFT: ${{ steps.verdict.outputs.drift }}
+        run: |
+          set -euo pipefail
+
+          drift=${DRIFT:-0}
+
+          if [ "${STATUS:-1}" != "0" ]; then
+            echo "::error::Cycle $CYCLE failed its end-to-end check; an issue has been filed."
+          elif [ "$drift" != "0" ]; then
+            echo "::warning::Cycle $CYCLE parsed cleanly but $drift count(s) drifted."
+          else
+            echo "Cycle $CYCLE parsed cleanly with no new record errors or count drift."
+          fi
