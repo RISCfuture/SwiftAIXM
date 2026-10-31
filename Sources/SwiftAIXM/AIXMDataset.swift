@@ -39,7 +39,9 @@ public struct AIXMDataset: Sendable, Codable {
     effectiveDate: Date = .now,
     errorCallback: ((any Error) -> Void)? = nil
   ) throws(AIXMError) {
-    guard let stream = InputStream(url: url) else { throw .fileNotFound(url) }
+    guard FileManager.default.isReadableFile(atPath: url.path(percentEncoded: false)),
+      let stream = InputStream(url: url)
+    else { throw .fileNotFound(url) }
     try self.init(
       parser: XMLParser(stream: stream),
       effectiveDate: effectiveDate,

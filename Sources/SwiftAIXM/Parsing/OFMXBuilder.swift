@@ -20,6 +20,9 @@ final class OFMXBuilder: FeatureBuilder {
   /// Every declared-distance day period OFMX defines.
   private static let knownDayPeriods: Set<String> = ["A", "D", "N", "OTHER"]
 
+  /// AIXM 4.5 yes/no codes.
+  private static let yesNoCodes = ["Y": true, "N": false]
+
   let featureNames: Set<String> = ["Ahp", "Rwy", "Rdn", "Rdd", "Obs"]
 
   let report: (any Error) -> Void
@@ -263,7 +266,13 @@ final class OFMXBuilder: FeatureBuilder {
           id: uid.attributes["mid"] ?? "",
           parse: ObstacleType.init(code:)
         ),
-        isLighted: node.value("codeLgt").map { $0 == "Y" },
+        isLighted: code(
+          node,
+          "codeLgt",
+          feature: "Obs",
+          id: uid.attributes["mid"] ?? "",
+          parse: { Self.yesNoCodes[$0] }
+        ),
         parts: [
           ObstaclePart(
             geometry: .point(location),

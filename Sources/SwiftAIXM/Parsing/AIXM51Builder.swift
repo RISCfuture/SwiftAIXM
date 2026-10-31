@@ -28,7 +28,9 @@ final class AIXM51Builder: FeatureBuilder {
   private var pointRecords = [PointRecord]()
   private var navaidRecords = [NavaidRecord]()
   private var glidepathsByID = [String: Glidepath]()
-  private var visualGlideSlopeRecords = [(direction: Reference, indicator: VisualGlideSlope)]()
+  private var visualGlideSlopeRecords = [
+    (id: String, direction: Reference, indicator: VisualGlideSlope)
+  ]()
   private var obstacles = [Obstacle]()
 
   init(effectiveDate: Date, report: @escaping (any Error) -> Void) {
@@ -79,7 +81,7 @@ final class AIXM51Builder: FeatureBuilder {
       case "RunwayCentrelinePoint": consumePoint(id: id, slice: slice)
       case "Navaid": consumeNavaid(id: id, slice: slice)
       case "Glidepath": consumeGlidepath(id: id, slice: slice)
-      case "VisualGlideSlopeIndicator": consumeVisualGlideSlope(slice: slice)
+      case "VisualGlideSlopeIndicator": consumeVisualGlideSlope(id: id, slice: slice)
       case "VerticalStructure": consumeObstacle(id: id, slice: slice)
       default: break
     }
@@ -289,10 +291,11 @@ final class AIXM51Builder: FeatureBuilder {
     )
   }
 
-  private func consumeVisualGlideSlope(slice: XMLNode) {
+  private func consumeVisualGlideSlope(id: String, slice: XMLNode) {
     for direction in slice.children("runwayDirection").compactMap({ reference($0) }) {
       visualGlideSlopeRecords.append(
         (
+          id,
           direction,
           VisualGlideSlope(
             angle: ValueParsing.degrees(slice.value("slopeAngle")),
@@ -324,7 +327,13 @@ final class AIXM51Builder: FeatureBuilder {
           id: id,
           parse: ObstacleType.init(code:)
         ),
-        isLighted: slice.value("lighted").map { $0 == "YES" },
+        isLighted: code(
+          slice,
+          "lighted",
+          feature: "VerticalStructure",
+          id: id,
+          parse: YesNo.init(code:)
+        )?.answer,
         parts: parts
       )
     )
@@ -391,7 +400,7 @@ final class AIXM51Builder: FeatureBuilder {
     let glidepaths = glidepathsByDirection()
     let visualGlideSlopes = Dictionary(
       visualGlideSlopeRecords.compactMap { record -> (String, VisualGlideSlope)? in
-        resolve(record.direction, from: "VisualGlideSlopeIndicator", id: "").map {
+        resolve(record.direction, from: "VisualGlideSlopeIndicator", id: record.id).map {
           ($0, record.indicator)
         }
       },

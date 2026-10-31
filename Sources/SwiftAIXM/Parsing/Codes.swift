@@ -56,6 +56,28 @@ enum RunwayType: String {
   }
 }
 
+/// AIXM 5.1 yes/no values.
+enum YesNo: String {
+  case yes = "YES"
+  case no = "NO"
+  case other = "OTHER"
+
+  /// The answer, or `nil` when the data set gives it as `OTHER`.
+  var answer: Bool? {
+    switch self {
+      case .yes: true
+      case .no: false
+      case .other: nil
+    }
+  }
+
+  init?(code: String) {
+    guard let value = Self(rawValue: code) ?? Self(otherCode: code) else { return nil }
+    self = value
+  }
+}
+
 extension RunwayPointRole: OtherCodeRepresentable {}
 extension DeclaredDistanceType: OtherCodeRepresentable {}
 extension RunwayType: OtherCodeRepresentable {}
+extension YesNo: OtherCodeRepresentable {}

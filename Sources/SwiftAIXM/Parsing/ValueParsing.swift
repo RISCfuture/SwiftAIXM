@@ -17,8 +17,32 @@ enum ValueParsing {
   /// The longest integer part, in digits, of a coordinate written in degrees and minutes.
   private static let maxDegreeMinuteDigits = 5
 
+  /// The longest integer part, in digits, of a coordinate written in degrees, minutes, and
+  /// seconds.
+  private static let maxDegreeMinuteSecondDigits = 7
+
   private static let minutesPerDegree = 60.0
   private static let secondsPerDegree = 3600.0
+
+  /// The ISO 8601 forms GML time positions are written in, most specific first. Each later
+  /// form also reads a prefix of the earlier ones, so the order matters.
+  private static let dateFormats: [Date.ISO8601FormatStyle] = [
+    .iso8601,
+    .init(includingFractionalSeconds: true),
+    zonelessTime(includingFractionalSeconds: true),
+    zonelessTime(includingFractionalSeconds: false),
+    .init(timeZone: .gmt).year().month().day()
+  ]
+
+  /// A date and time with no time zone, read as UTC.
+  private static func zonelessTime(includingFractionalSeconds: Bool) -> Date.ISO8601FormatStyle {
+    Date.ISO8601FormatStyle(timeZone: .gmt)
+      .year()
+      .month()
+      .day()
+      .dateTimeSeparator(.standard)
+      .time(includingFractionalSeconds: includingFractionalSeconds)
+  }
 
   /// A length in the given AIXM unit of measure.
   static func length(_ text: String?, unit: String?) -> Measurement<UnitLength>? {
@@ -42,8 +66,11 @@ enum ValueParsing {
    */
   static func positions(_ text: String?, srsName: String?) -> [Location]? {
     guard let text else { return nil }
-    let numbers = text.split(whereSeparator: \.isWhitespace).compactMap { Double($0) }
-    guard !numbers.isEmpty, numbers.count.isMultiple(of: 2) else { return nil }
+    let tokens = text.split(whereSeparator: \.isWhitespace)
+    let numbers = tokens.compactMap { Double($0) }
+    guard !numbers.isEmpty, numbers.count == tokens.count, numbers.count.isMultiple(of: 2) else {
+      return nil
+    }
 
     let longitudeFirst = srsName?.contains("CRS84") == true
     return stride(from: 0, to: numbers.count, by: 2).map { index in
@@ -74,7 +101,9 @@ enum ValueParsing {
   }
 
   private static func magnitude(integerPart: Substring, fraction: Substring) -> Double? {
-    guard integerPart.allSatisfy(\.isNumber), !integerPart.isEmpty else { return nil }
+    guard integerPart.allSatisfy(\.isNumber), !integerPart.isEmpty,
+      integerPart.count <= maxDegreeMinuteSecondDigits
+    else { return nil }
 
     if integerPart.count <= maxDecimalDegreeDigits {
       return Double(integerPart + fraction)
@@ -95,10 +124,13 @@ enum ValueParsing {
     return degrees + minutes / minutesPerDegree + seconds / secondsPerDegree
   }
 
-  /// A GML time position, with or without fractional seconds.
+  /**
+   A GML time position, with or without fractional seconds.
+
+   A time written without a time zone, or a date written without a time, is read as UTC.
+   */
   static func date(_ text: String?) -> Date? {
     guard let text else { return nil }
-    if let date = try? Date(text, strategy: .iso8601) { return date }
-    return try? Date(text, strategy: Date.ISO8601FormatStyle(includingFractionalSeconds: true))
+    return dateFormats.lazy.compactMap { try? Date(text, strategy: $0) }.first
   }
 }
