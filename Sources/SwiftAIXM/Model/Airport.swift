@@ -24,13 +24,10 @@ public struct Airport: Sendable, Codable, Hashable, Identifiable {
   public let city: String?
 
   /// The kind of aerodrome.
-  public let type: AirportType
+  public let type: AirportType?
 
-  /// The aerodrome reference point.
+  /// The aerodrome reference point, with the aerodrome's elevation.
   public let referencePoint: Location?
-
-  /// The aerodrome's elevation above mean sea level.
-  public let elevation: Measurement<UnitLength>?
 
   /// The magnetic variation, positive east.
   public let magneticVariation: Measurement<UnitAngle>?
@@ -46,9 +43,8 @@ public struct Airport: Sendable, Codable, Hashable, Identifiable {
     IATAIdentifier: String?,
     name: String,
     city: String?,
-    type: AirportType,
+    type: AirportType?,
     referencePoint: Location?,
-    elevation: Measurement<UnitLength>?,
     magneticVariation: Measurement<UnitAngle>?,
     runways: [Runway]
   ) {
@@ -60,7 +56,6 @@ public struct Airport: Sendable, Codable, Hashable, Identifiable {
     self.city = city
     self.type = type
     self.referencePoint = referencePoint
-    self.elevation = elevation
     self.magneticVariation = magneticVariation
     self.runways = runways
   }

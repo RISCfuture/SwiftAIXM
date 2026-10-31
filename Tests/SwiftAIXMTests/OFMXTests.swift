@@ -25,9 +25,13 @@ struct `OFMX snapshots` {
     #expect(ljubljana.IATAIdentifier == "LJU")
     #expect(ljubljana.name == "LJUBLJANA / BRNIK")
     #expect(
-      ljubljana.referencePoint == Location(latitudeDeg: 46.22444444, longitudeDeg: 14.45611111)
+      ljubljana.referencePoint
+        == Location(
+          latitudeDeg: 46.22444444,
+          longitudeDeg: 14.45611111,
+          elevation: Measurement(value: 388, unit: .meters)
+        )
     )
-    #expect(ljubljana.elevation == Measurement(value: 388, unit: .meters))
   }
 
   @Test
@@ -41,7 +45,7 @@ struct `OFMX snapshots` {
     #expect(runway12.designator == "12")
     #expect(runway12.trueBearing == Measurement(value: 126, unit: .degrees))
     #expect(
-      runway12.threshold?.location == Location(latitudeDeg: 46.23249167, longitudeDeg: 14.44039167)
+      runway12.threshold == Location(latitudeDeg: 46.23249167, longitudeDeg: 14.44039167)
     )
     #expect(runway12.declaredDistances.TORA == Measurement(value: 3300, unit: .meters))
     #expect(runway12.declaredDistances.LDA == Measurement(value: 3300, unit: .meters))

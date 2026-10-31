@@ -30,9 +30,13 @@ struct `AIXM 5.1 aerodromes` {
     #expect(southend.name == "SOUTHEND")
     #expect(southend.type == .aerodrome)
     #expect(
-      southend.referencePoint == Location(latitudeDeg: 51.570412389, longitudeDeg: 0.693294083)
+      southend.referencePoint
+        == Location(
+          latitudeDeg: 51.570412389,
+          longitudeDeg: 0.693294083,
+          elevation: Measurement(value: 58.4, unit: .feet)
+        )
     )
-    #expect(southend.elevation == Measurement(value: 58.4, unit: .feet))
   }
 
   @Test
@@ -50,9 +54,13 @@ struct `AIXM 5.1 aerodromes` {
   func `places the threshold and displaced threshold by role`() throws {
     let runway05 = try direction("05"), runway23 = try direction("23")
     #expect(
-      runway05.threshold?.location == Location(latitudeDeg: 51.565924361, longitudeDeg: 0.683322972)
+      runway05.threshold
+        == Location(
+          latitudeDeg: 51.565924361,
+          longitudeDeg: 0.683322972,
+          elevation: Measurement(value: 55.18, unit: .feet)
+        )
     )
-    #expect(runway05.threshold?.elevation == Measurement(value: 55.18, unit: .feet))
     #expect(runway05.displacedThreshold == nil)
     #expect(runway23.threshold == nil)
     #expect(runway23.displacedThreshold?.elevation == Measurement(value: 38.14, unit: .feet))

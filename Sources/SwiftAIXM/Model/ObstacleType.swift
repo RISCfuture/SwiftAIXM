@@ -1,53 +1,182 @@
 /// The kind of structure an ``Obstacle`` is.
-public struct ObstacleType: CodeList {
+public enum ObstacleType: String, Sendable, Codable, CaseIterable {
+
+  /// Agricultural equipment.
+  case agriculturalEquipment = "AG_EQUIP"
 
   /// An antenna.
-  public static let antenna = Self(rawValue: "ANTENNA")
+  case antenna = "ANTENNA"
+
+  /// An arch.
+  case arch = "ARCH"
+
+  /// A bridge.
+  case bridge = "BRIDGE"
 
   /// A building.
-  public static let building = Self(rawValue: "BUILDING")
+  case building = "BUILDING"
 
   /// A cable car or aerial ropeway.
-  public static let cableCar = Self(rawValue: "CABLE_CAR")
+  case cableCar = "CABLE_CAR"
 
-  /// A chimney or stack.
-  public static let stack = Self(rawValue: "STACK")
+  /// An overhead catenary line.
+  case catenary = "CATENARY"
+
+  /// A compressed-air system.
+  case compressedAirSystem = "COMPRESSED_AIR_SYSTEM"
+
+  /// A control or monitoring system.
+  case controlMonitoringSystem = "CONTROL_MONITORING_SYSTEM"
+
+  /// A control tower.
+  case controlTower = "CONTROL_TOWER"
+
+  /// A cooling tower.
+  case coolingTower = "COOLING_TOWER"
 
   /// A crane.
-  public static let crane = Self(rawValue: "CRANE")
+  case crane = "CRANE"
 
-  /// A mast.
-  public static let mast = Self(rawValue: "MAST")
+  /// A dam.
+  case dam = "DAM"
+
+  /// A dome.
+  case dome = "DOME"
+
+  /// An electrical exit light.
+  case electricalExitLight = "ELECTRICAL_EXIT_LIGHT"
+
+  /// An electrical system.
+  case electricalSystem = "ELECTRICAL_SYSTEM"
+
+  /// An elevator.
+  case elevator = "ELEVATOR"
+
+  /// A fence.
+  case fence = "FENCE"
+
+  /// A fuel system.
+  case fuelSystem = "FUEL_SYSTEM"
+
+  /// A gate.
+  case gate = "GATE"
+
+  /// A general utility.
+  case generalUtility = "GENERAL_UTILITY"
+
+  /// A grain elevator.
+  case grainElevator = "GRAIN_ELEVATOR"
+
+  /// A heating or cooling system.
+  case heatCoolSystem = "HEAT_COOL_SYSTEM"
+
+  /// An industrial system.
+  case industrialSystem = "INDUSTRIAL_SYSTEM"
+
+  /// A lighthouse.
+  case lighthouse = "LIGHTHOUSE"
+
+  /// A mast (open flightmaps).
+  case mast = "MAST"
+
+  /// A monument.
+  case monument = "MONUMENT"
+
+  /// A natural-gas system.
+  case naturalGasSystem = "NATURAL_GAS_SYSTEM"
+
+  /// A natural high point.
+  case naturalHighPoint = "NATURAL_HIGHPOINT"
+
+  /// A navigation aid.
+  case navaid = "NAVAID"
+
+  /// A nuclear reactor.
+  case nuclearReactor = "NUCLEAR_REACTOR"
+
+  /// A pole.
+  case pole = "POLE"
+
+  /// A power plant.
+  case powerPlant = "POWER_PLANT"
+
+  /// A refinery.
+  case refinery = "REFINERY"
+
+  /// A rig.
+  case rig = "RIG"
+
+  /// A saltwater system.
+  case saltwaterSystem = "SALTWATER_SYSTEM"
+
+  /// A sign.
+  case sign = "SIGN"
+
+  /// A spire.
+  case spire = "SPIRE"
+
+  /// A stack or chimney.
+  case stack = "STACK"
+
+  /// A stadium.
+  case stadium = "STADIUM"
+
+  /// A storm-water system.
+  case stormSystem = "STORM_SYSTEM"
+
+  /// A tank.
+  case tank = "TANK"
+
+  /// A tethered balloon.
+  case tetheredBalloon = "TETHERED_BALLOON"
 
   /// A tower.
-  public static let tower = Self(rawValue: "TOWER")
+  case tower = "TOWER"
+
+  /// A tramway.
+  case tramway = "TRAMWAY"
 
   /// A power or transmission line.
-  public static let transmissionLine = Self(rawValue: "TRANSMISSION_LINE")
+  case transmissionLine = "TRANSMISSION_LINE"
 
-  /// A tree or other vegetation.
-  public static let vegetation = Self(rawValue: "VEGETATION")
+  /// A tree.
+  case tree = "TREE"
+
+  /// An urban area.
+  case urban = "URBAN"
+
+  /// Vegetation.
+  case vegetation = "VEGETATION"
+
+  /// A wall.
+  case wall = "WALL"
+
+  /// A wastewater system.
+  case wastewaterSystem = "WASTEWATER_SYSTEM"
+
+  /// A water system.
+  case waterSystem = "WATER_SYSTEM"
+
+  /// A water tower.
+  case waterTower = "WATER_TOWER"
 
   /// A wind turbine.
-  public static let windTurbine = Self(rawValue: "WINDMILL")
+  case windTurbine = "WINDMILL"
 
   /// A wind farm.
-  public static let windFarm = Self(rawValue: "WINDMILL_FARMS")
+  case windFarm = "WINDMILL_FARMS"
 
-  /// An unspecified structure.
-  public static let other = Self(rawValue: "OTHER")
+  /// A structure the data set describes as `OTHER`.
+  case other = "OTHER"
 
-  private static let aliases = [
-    "CHIMNEY": "STACK",
-    "WINDTURBINE": "WINDMILL",
-    "TREE": "VEGETATION"
-  ]
+  /// open flightmaps spellings of AIXM 5.1 codes.
+  private static let OFMXCodes: [String: Self] = ["CHIMNEY": .stack, "WINDTURBINE": .windTurbine]
 
-  /// The code as written in AIXM 5.1.
-  public let rawValue: String
-
-  /// Creates a value from its code as written in the data set.
-  public init(rawValue: String) {
-    self.rawValue = Self.aliases[rawValue] ?? rawValue
+  /// Reads a code as written in an AIXM 5.1 or OFMX data set.
+  init?(code: String) {
+    guard let value = Self(rawValue: code) ?? Self.OFMXCodes[code] ?? Self(otherCode: code) else {
+      return nil
+    }
+    self = value
   }
 }

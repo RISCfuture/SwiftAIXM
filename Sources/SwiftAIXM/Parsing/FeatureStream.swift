@@ -10,11 +10,33 @@ protocol FeatureBuilder: AnyObject {
   /// The local names of the elements this builder consumes.
   var featureNames: Set<String> { get }
 
+  /// Receives problems with individual records.
+  var report: (any Error) -> Void { get }
+
   /// Consumes one feature element and everything below it.
   func consume(_ feature: XMLNode)
 
   /// Links the consumed features into model records.
   func finish() -> (airports: [Airport], obstacles: [Obstacle])
+}
+
+extension FeatureBuilder {
+
+  /// A coded value, or `nil` (with the problem reported) if the code isn't in its list.
+  func code<T>(
+    _ node: XMLNode?,
+    _ field: String,
+    feature: String,
+    id: String,
+    parse: (String) -> T?
+  ) -> T? {
+    guard let text = node?.value(field) else { return nil }
+    guard let value = parse(text) else {
+      report(AIXMRecordError.invalidValue(feature: feature, id: id, field: field, value: text))
+      return nil
+    }
+    return value
+  }
 }
 
 /**

@@ -1,32 +1,36 @@
 /// The kind of aerodrome an ``Airport`` record describes.
-public struct AirportType: CodeList {
+public enum AirportType: String, Sendable, Codable, CaseIterable {
 
   /// An aerodrome only.
-  public static let aerodrome = Self(rawValue: "AD")
+  case aerodrome = "AD"
 
   /// An aerodrome with heliport facilities.
-  public static let aerodromeAndHeliport = Self(rawValue: "AH")
+  case aerodromeAndHeliport = "AH"
 
   /// A heliport only.
-  public static let heliport = Self(rawValue: "HP")
+  case heliport = "HP"
 
   /// A landing site.
-  public static let landingSite = Self(rawValue: "LS")
+  case landingSite = "LS"
 
   /// A glider site (open flightmaps extension).
-  public static let gliderSite = Self(rawValue: "GLD")
+  case gliderSite = "GLD"
 
   /// An ultralight site (open flightmaps extension).
-  public static let ultralightSite = Self(rawValue: "UL")
+  case ultralightSite = "UL"
 
-  /// The code as written in the data set.
-  public let rawValue: String
+  /// An emergency landing site (open flightmaps extension).
+  case emergencyLandingSite = "ELS"
+
+  /// A kind the data set describes as `OTHER`.
+  case other = "OTHER"
 
   /// Whether the aerodrome serves fixed-wing aircraft.
   public var hasRunways: Bool { self == .aerodrome || self == .aerodromeAndHeliport }
 
-  /// Creates a value from its code as written in the data set.
-  public init(rawValue: String) {
-    self.rawValue = rawValue
+  /// Reads a code as written in an AIXM 5.1 or OFMX data set.
+  init?(code: String) {
+    guard let value = Self(rawValue: code) ?? Self(otherCode: code) else { return nil }
+    self = value
   }
 }

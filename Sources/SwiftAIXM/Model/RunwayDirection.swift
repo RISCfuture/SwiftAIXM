@@ -16,14 +16,15 @@ public struct RunwayDirection: Sendable, Codable, Hashable, Identifiable {
   /// The runway's magnetic bearing in this direction.
   public let magneticBearing: Measurement<UnitAngle>?
 
-  /// The threshold: the start of the runway available for landing when it isn't displaced.
-  public let threshold: RunwayPoint?
+  /// The threshold, with its elevation: the start of the runway available for landing when it
+  /// isn't displaced.
+  public let threshold: Location?
 
-  /// The displaced threshold, if the threshold is displaced.
-  public let displacedThreshold: RunwayPoint?
+  /// The displaced threshold, with its elevation, if the threshold is displaced.
+  public let displacedThreshold: Location?
 
   /// The far end of the runway in this direction.
-  public let end: RunwayPoint?
+  public let end: Location?
 
   /// The elevation of the touchdown zone.
   public let touchdownZoneElevation: Measurement<UnitLength>?
@@ -43,9 +44,9 @@ public struct RunwayDirection: Sendable, Codable, Hashable, Identifiable {
     designator: String,
     trueBearing: Measurement<UnitAngle>?,
     magneticBearing: Measurement<UnitAngle>?,
-    threshold: RunwayPoint?,
-    displacedThreshold: RunwayPoint?,
-    end: RunwayPoint?,
+    threshold: Location?,
+    displacedThreshold: Location?,
+    end: Location?,
     touchdownZoneElevation: Measurement<UnitLength>?,
     declaredDistances: DeclaredDistances,
     glidepath: Glidepath?,
@@ -62,22 +63,6 @@ public struct RunwayDirection: Sendable, Codable, Hashable, Identifiable {
     self.declaredDistances = declaredDistances
     self.glidepath = glidepath
     self.visualGlideSlope = visualGlideSlope
-  }
-}
-
-/// A point on a runway's centre line.
-public struct RunwayPoint: Sendable, Codable, Hashable {
-
-  /// The point's position.
-  public let location: Location
-
-  /// The point's elevation above mean sea level.
-  public let elevation: Measurement<UnitLength>?
-
-  /// Creates a centre-line point.
-  public init(location: Location, elevation: Measurement<UnitLength>?) {
-    self.location = location
-    self.elevation = elevation
   }
 }
 

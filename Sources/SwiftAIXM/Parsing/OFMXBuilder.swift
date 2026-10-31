@@ -17,15 +17,18 @@ final class OFMXBuilder: FeatureBuilder {
   /// Declared-distance day periods, in order of preference: all day, then daytime.
   private static let dayPeriods = ["A", "D"]
 
+  /// Every declared-distance day period OFMX defines.
+  private static let knownDayPeriods: Set<String> = ["A", "D", "N", "OTHER"]
+
   let featureNames: Set<String> = ["Ahp", "Rwy", "Rdn", "Rdd", "Obs"]
 
-  private let report: (any Error) -> Void
+  let report: (any Error) -> Void
 
   private var airportNodes = [XMLNode]()
   private var runwayNodes = [XMLNode]()
   private var directionNodes = [XMLNode]()
   private var distancesByDirection = [
-    String: [String: (period: String, value: Measurement<UnitLength>)]
+    String: [DeclaredDistanceType: (period: String, value: Measurement<UnitLength>)]
   ]()
   private var obstacles = [Obstacle]()
 
@@ -95,7 +98,13 @@ final class OFMXBuilder: FeatureBuilder {
 
   private func airport(_ node: XMLNode, runways: (String) -> [Runway]) -> Airport? {
     guard let key = Self.airportKey(node.child("AhpUid")) else {
-      report(AIXMRecordError.missingValue(feature: "Ahp", id: "", field: "codeId"))
+      report(
+        AIXMRecordError.missingValue(
+          feature: "Ahp",
+          id: node.child("AhpUid")?.attributes["mid"] ?? "",
+          field: "codeId"
+        )
+      )
       return nil
     }
     return Airport(
@@ -105,9 +114,9 @@ final class OFMXBuilder: FeatureBuilder {
       IATAIdentifier: node.value("codeIata"),
       name: node.value("txtName") ?? key,
       city: node.value("txtNameCitySer"),
-      type: node.value("codeType").map(AirportType.init) ?? .aerodrome,
-      referencePoint: Self.location(node),
-      elevation: Self.length(node, value: "valElev", unit: "uomDistVer"),
+      type: code(node, "codeType", feature: "Ahp", id: key, parse: AirportType.init(code:)),
+      referencePoint: Self.location(node)?
+        .with(elevation: Self.length(node, value: "valElev", unit: "uomDistVer")),
       magneticVariation: ValueParsing.degrees(node.value("valMagVar")),
       runways: runways(key).sorted { $0.designator < $1.designator }
     )
@@ -120,7 +129,13 @@ final class OFMXBuilder: FeatureBuilder {
     guard let uid = node.child("RwyUid"), let key = Self.runwayKey(uid),
       let airportKey = Self.airportKey(uid.child("AhpUid")), let designator = uid.value("txtDesig")
     else {
-      report(AIXMRecordError.missingValue(feature: "Rwy", id: "", field: "RwyUid"))
+      report(
+        AIXMRecordError.missingValue(
+          feature: "Rwy",
+          id: node.child("RwyUid")?.attributes["mid"] ?? "",
+          field: "RwyUid"
+        )
+      )
       return nil
     }
     let runway = Runway(
@@ -129,7 +144,13 @@ final class OFMXBuilder: FeatureBuilder {
       isFixedWing: true,
       length: Self.length(node, value: "valLen", unit: "uomDimRwy"),
       width: Self.length(node, value: "valWid", unit: "uomDimRwy"),
-      composition: node.value("codeComposition").map(SurfaceComposition.init),
+      composition: code(
+        node,
+        "codeComposition",
+        feature: "Rwy",
+        id: key,
+        parse: SurfaceComposition.init(code:)
+      ),
       directions: directions(key).sorted { $0.designator < $1.designator }
     )
     return (airportKey, runway)
@@ -139,15 +160,19 @@ final class OFMXBuilder: FeatureBuilder {
     guard let uid = node.child("RdnUid"), let key = Self.directionKey(uid),
       let runwayKey = Self.runwayKey(uid.child("RwyUid")), let designator = uid.value("txtDesig")
     else {
-      report(AIXMRecordError.missingValue(feature: "Rdn", id: "", field: "RdnUid"))
+      report(
+        AIXMRecordError.missingValue(
+          feature: "Rdn",
+          id: node.child("RdnUid")?.attributes["mid"] ?? "",
+          field: "RdnUid"
+        )
+      )
       return nil
     }
 
     let distances = (distancesByDirection[key] ?? [:]).mapValues(\.value)
-    let point = Self.location(node).map {
-      RunwayPoint(location: $0, elevation: nil)
-    }
-    let isDisplaced = (distances["DPLM"]?.value ?? 0) > 0
+    let point = Self.location(node)
+    let isDisplaced = (distances[.thresholdDisplacement]?.value ?? 0) > 0
     let visualGlideSlope = ValueParsing.degrees(node.value("valSlopeAngleGpVasis")).map {
       VisualGlideSlope(
         angle: $0,
@@ -165,11 +190,11 @@ final class OFMXBuilder: FeatureBuilder {
       end: nil,
       touchdownZoneElevation: Self.length(node, value: "valElevTdz", unit: "uomElevTdz"),
       declaredDistances: DeclaredDistances(
-        TORA: distances["TORA"],
-        TODA: distances["TODA"],
-        ASDA: distances["ASDA"],
-        LDA: distances["LDA"],
-        thresholdDisplacement: distances["DPLM"]
+        TORA: distances[.TORA],
+        TODA: distances[.TODA],
+        ASDA: distances[.ASDA],
+        LDA: distances[.LDA],
+        thresholdDisplacement: distances[.thresholdDisplacement]
       ),
       glidepath: nil,
       visualGlideSlope: visualGlideSlope
@@ -179,7 +204,20 @@ final class OFMXBuilder: FeatureBuilder {
 
   private func consumeDeclaredDistance(_ node: XMLNode) {
     guard let uid = node.child("RddUid"), let key = Self.directionKey(uid.child("RdnUid")),
-      let type = uid.value("codeType"), let period = uid.value("codeDayPeriod"),
+      let type = code(
+        uid,
+        "codeType",
+        feature: "Rdd",
+        id: key,
+        parse: DeclaredDistanceType.init(code:)
+      ),
+      let period = code(
+        uid,
+        "codeDayPeriod",
+        feature: "Rdd",
+        id: key,
+        parse: { Self.knownDayPeriods.contains($0) ? $0 : nil }
+      ),
       let rank = Self.dayPeriods.firstIndex(of: period)
     else { return }
     guard let value = Self.length(node, value: "valDist", unit: "uomDist") else {
@@ -205,14 +243,26 @@ final class OFMXBuilder: FeatureBuilder {
 
   private func consumeObstacle(_ node: XMLNode) {
     guard let uid = node.child("ObsUid"), let location = Self.location(uid) else {
-      report(AIXMRecordError.missingValue(feature: "Obs", id: "", field: "ObsUid"))
+      report(
+        AIXMRecordError.missingValue(
+          feature: "Obs",
+          id: node.child("ObsUid")?.attributes["mid"] ?? "",
+          field: "ObsUid"
+        )
+      )
       return
     }
     obstacles.append(
       Obstacle(
         id: uid.attributes["mid"] ?? "\(location.latitudeDeg),\(location.longitudeDeg)",
         name: node.value("txtName"),
-        type: node.value("codeType").map(ObstacleType.init),
+        type: code(
+          node,
+          "codeType",
+          feature: "Obs",
+          id: uid.attributes["mid"] ?? "",
+          parse: ObstacleType.init(code:)
+        ),
         isLighted: node.value("codeLgt").map { $0 == "Y" },
         parts: [
           ObstaclePart(

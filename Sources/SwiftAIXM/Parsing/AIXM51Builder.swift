@@ -19,7 +19,7 @@ final class AIXM51Builder: FeatureBuilder {
   ]
 
   private let effectiveDate: Date
-  private let report: (any Error) -> Void
+  let report: (any Error) -> Void
 
   private var identifiersByLocalID = [String: String]()
   private var airportRecords = [AirportRecord]()
@@ -48,14 +48,14 @@ final class AIXM51Builder: FeatureBuilder {
     )
   }
 
-  private static func elevatedPoint(_ node: XMLNode?) -> RunwayPoint? {
+  private static func elevatedPoint(_ node: XMLNode?) -> Location? {
     guard let node,
       let location = ValueParsing.positions(
         node.value("pos"),
         srsName: node.attributes["srsName"] ?? node.child("pos")?.attributes["srsName"]
       )?.first
     else { return nil }
-    return RunwayPoint(location: location, elevation: lengthValue(node.child("elevation")))
+    return location.with(elevation: lengthValue(node.child("elevation")))
   }
 
   func consume(_ feature: XMLNode) {
@@ -175,9 +175,15 @@ final class AIXM51Builder: FeatureBuilder {
         IATAIdentifier: slice.value("designatorIATA"),
         name: slice.value("name") ?? designator,
         city: slice.value("servedCity", "City", "name"),
-        type: slice.value("type").map(AirportType.init) ?? .aerodrome,
-        referencePoint: Self.elevatedPoint(slice.descendant("ARP", "ElevatedPoint"))?.location,
-        elevation: Self.lengthValue(slice.child("fieldElevation")),
+        type: code(
+          slice,
+          "type",
+          feature: "AirportHeliport",
+          id: id,
+          parse: AirportType.init(code:)
+        ),
+        referencePoint: Self.elevatedPoint(slice.descendant("ARP", "ElevatedPoint"))?
+          .with(elevation: Self.lengthValue(slice.child("fieldElevation"))),
         magneticVariation: ValueParsing.degrees(slice.value("magneticVariation"))
       )
     )
@@ -193,11 +199,17 @@ final class AIXM51Builder: FeatureBuilder {
         id: id,
         airport: reference(slice.child("associatedAirportHeliport")),
         designator: designator,
-        isFixedWing: slice.value("type").map { $0 == "RWY" } ?? true,
+        isFixedWing: code(slice, "type", feature: "Runway", id: id, parse: RunwayType.init(code:))
+          .map { $0 == .runway } ?? true,
         length: Self.lengthValue(slice.child("nominalLength")),
         width: Self.lengthValue(slice.child("nominalWidth")),
-        composition: slice.value("surfaceProperties", "SurfaceCharacteristics", "composition")
-          .map(SurfaceComposition.init)
+        composition: code(
+          slice.descendant("surfaceProperties", "SurfaceCharacteristics"),
+          "composition",
+          feature: "Runway",
+          id: id,
+          parse: SurfaceComposition.init(code:)
+        )
       )
     )
   }
@@ -224,11 +236,20 @@ final class AIXM51Builder: FeatureBuilder {
   private func consumePoint(id: String, slice: XMLNode) {
     let distances = slice.children("associatedDeclaredDistance")
       .compactMap { $0.child("RunwayDeclaredDistance") }
-      .compactMap { distance -> (String, Measurement<UnitLength>)? in
+      .compactMap { distance -> (DeclaredDistanceType, Measurement<UnitLength>)? in
         let values = distance.children("declaredValue").compactMap {
           Self.lengthValue($0.descendant("RunwayDeclaredDistanceValue", "distance"))
         }
-        guard let type = distance.value("type"), let longest = values.max() else { return nil }
+        guard
+          let type = code(
+            distance,
+            "type",
+            feature: "RunwayCentrelinePoint",
+            id: id,
+            parse: DeclaredDistanceType.init(code:)
+          ),
+          let longest = values.max()
+        else { return nil }
         return (type, longest)
       }
 
@@ -236,7 +257,13 @@ final class AIXM51Builder: FeatureBuilder {
       PointRecord(
         id: id,
         direction: reference(slice.child("onRunway")),
-        role: slice.value("role"),
+        role: code(
+          slice,
+          "role",
+          feature: "RunwayCentrelinePoint",
+          id: id,
+          parse: RunwayPointRole.init(code:)
+        ),
         point: Self.elevatedPoint(slice.descendant("location", "ElevatedPoint")),
         declaredDistances: Dictionary(distances, uniquingKeysWith: { first, _ in first })
       )
@@ -290,7 +317,13 @@ final class AIXM51Builder: FeatureBuilder {
       Obstacle(
         id: id,
         name: slice.value("name"),
-        type: slice.value("type").map(ObstacleType.init),
+        type: code(
+          slice,
+          "type",
+          feature: "VerticalStructure",
+          id: id,
+          parse: ObstacleType.init(code:)
+        ),
         isLighted: slice.value("lighted").map { $0 == "YES" },
         parts: parts
       )
@@ -301,7 +334,7 @@ final class AIXM51Builder: FeatureBuilder {
     let height = Self.lengthValue(part.child("verticalExtent"))
 
     if let point = part.descendant("horizontalProjection_location", "ElevatedPoint") {
-      guard let runwayPoint = Self.elevatedPoint(point) else {
+      guard let location = Self.elevatedPoint(point) else {
         report(
           AIXMRecordError.invalidValue(
             feature: "VerticalStructure",
@@ -313,8 +346,8 @@ final class AIXM51Builder: FeatureBuilder {
         return nil
       }
       return ObstaclePart(
-        geometry: .point(runwayPoint.location),
-        topElevation: runwayPoint.elevation,
+        geometry: .point(location.with(elevation: nil)),
+        topElevation: location.elevation,
         height: height
       )
     }
@@ -411,9 +444,8 @@ private struct AirportRecord {
   let IATAIdentifier: String?
   let name: String
   let city: String?
-  let type: AirportType
+  let type: AirportType?
   let referencePoint: Location?
-  let elevation: Measurement<UnitLength>?
   let magneticVariation: Measurement<UnitAngle>?
 
   func airport(runways: [Runway]) -> Airport {
@@ -426,7 +458,6 @@ private struct AirportRecord {
       city: city,
       type: type,
       referencePoint: referencePoint,
-      elevation: elevation,
       magneticVariation: magneticVariation,
       runways: runways
     )
@@ -458,7 +489,7 @@ private struct RunwayRecord {
 private struct DirectionRecord {
   /// Centre-line point roles whose declared distances apply to the whole direction, in
   /// order of preference.
-  private static let declaredDistanceRoles = ["THR", "DISTHR"]
+  private static let declaredDistanceRoles: [RunwayPointRole] = [.threshold, .displacedThreshold]
 
   let id: String
   let runway: Reference?
@@ -475,17 +506,19 @@ private struct DirectionRecord {
    intersections. Those never exceed the full-length distances, so the longest of each
    type is taken.
    */
-  private static func declaredDistances(_ points: [PointRecord]) -> [String: Measurement<
-    UnitLength
-  >] {
+  private static func declaredDistances(
+    _ points: [PointRecord]
+  ) -> [DeclaredDistanceType: Measurement<UnitLength>] {
     let thresholdDistances =
       declaredDistanceRoles
       .flatMap { role in points.filter { $0.role == role } }
-      .reduce(into: [String: Measurement<UnitLength>]()) { merged, point in
+      .reduce(into: [DeclaredDistanceType: Measurement<UnitLength>]()) { merged, point in
         merged.merge(point.declaredDistances) { existing, _ in existing }
       }
-    let otherDistances = points.filter { !declaredDistanceRoles.contains($0.role ?? "") }
-      .reduce(into: [String: Measurement<UnitLength>]()) { merged, point in
+    let otherDistances =
+      points
+      .filter { point in !declaredDistanceRoles.contains { $0 == point.role } }
+      .reduce(into: [DeclaredDistanceType: Measurement<UnitLength>]()) { merged, point in
         merged.merge(point.declaredDistances) { Swift.max($0, $1) }
       }
     return thresholdDistances.merging(otherDistances) { threshold, _ in threshold }
@@ -496,7 +529,7 @@ private struct DirectionRecord {
     glidepath: Glidepath?,
     visualGlideSlope: VisualGlideSlope?
   ) -> RunwayDirection {
-    func point(_ role: String) -> RunwayPoint? {
+    func point(_ role: RunwayPointRole) -> Location? {
       points.first { $0.role == role }?.point
     }
     let distances = Self.declaredDistances(points)
@@ -506,16 +539,16 @@ private struct DirectionRecord {
       designator: designator,
       trueBearing: trueBearing,
       magneticBearing: magneticBearing,
-      threshold: point("THR"),
-      displacedThreshold: point("DISTHR"),
-      end: point("END"),
+      threshold: point(.threshold),
+      displacedThreshold: point(.displacedThreshold),
+      end: point(.end),
       touchdownZoneElevation: touchdownZoneElevation,
       declaredDistances: DeclaredDistances(
-        TORA: distances["TORA"],
-        TODA: distances["TODA"],
-        ASDA: distances["ASDA"],
-        LDA: distances["LDA"],
-        thresholdDisplacement: distances["DTHR"]
+        TORA: distances[.TORA],
+        TODA: distances[.TODA],
+        ASDA: distances[.ASDA],
+        LDA: distances[.LDA],
+        thresholdDisplacement: distances[.thresholdDisplacement]
       ),
       glidepath: glidepath,
       visualGlideSlope: visualGlideSlope
@@ -526,9 +559,9 @@ private struct DirectionRecord {
 private struct PointRecord {
   let id: String
   let direction: Reference?
-  let role: String?
-  let point: RunwayPoint?
-  let declaredDistances: [String: Measurement<UnitLength>]
+  let role: RunwayPointRole?
+  let point: Location?
+  let declaredDistances: [DeclaredDistanceType: Measurement<UnitLength>]
 }
 
 private struct NavaidRecord {

@@ -62,7 +62,6 @@ skipped or the affected value omitted, and reading continues.
 - ``AirportType``
 - ``Runway``
 - ``RunwayDirection``
-- ``RunwayPoint``
 - ``DeclaredDistances``
 - ``Glidepath``
 - ``VisualGlideSlope``
@@ -78,4 +77,3 @@ skipped or the affected value omitted, and reading continues.
 ### Shared Types
 
 - ``Location``
-- ``CodeList``

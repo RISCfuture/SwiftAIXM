@@ -1,102 +1,111 @@
-/**
- The material a runway surface is made of.
-
- AIXM 4.5 (and open flightmaps) abbreviate some codes differently from AIXM 5.1;
- ``init(rawValue:)`` maps those to their AIXM 5.1 spelling.
- */
-public struct SurfaceComposition: CodeList {
+/// The material a runway surface is made of.
+public enum SurfaceComposition: String, Sendable, Codable, CaseIterable {
 
   /// Asphalt.
-  public static let asphalt = Self(rawValue: "ASPH")
+  case asphalt = "ASPH"
 
   /// Asphalt and grass.
-  public static let asphaltAndGrass = Self(rawValue: "ASPH_GRASS")
+  case asphaltAndGrass = "ASPH_GRASS"
 
   /// Concrete.
-  public static let concrete = Self(rawValue: "CONC")
+  case concrete = "CONC"
 
   /// Concrete and asphalt.
-  public static let concreteAndAsphalt = Self(rawValue: "CONC_ASPH")
+  case concreteAndAsphalt = "CONC_ASPH"
 
   /// Concrete and grass.
-  public static let concreteAndGrass = Self(rawValue: "CONC_GRS")
-
-  /// Bituminous surface.
-  public static let bitumen = Self(rawValue: "BITUM")
-
-  /// Non-bituminous mix.
-  public static let nonBituminousMix = Self(rawValue: "NON_BITUM_MIX")
-
-  /// Macadam.
-  public static let macadam = Self(rawValue: "MACADAM")
-
-  /// Brick.
-  public static let brick = Self(rawValue: "BRICK")
-
-  /// Metal.
-  public static let metal = Self(rawValue: "METAL")
-
-  /// Pierced steel planking.
-  public static let piercedSteelPlanking = Self(rawValue: "PSP")
-
-  /// Wood.
-  public static let wood = Self(rawValue: "WOOD")
+  case concreteAndGrass = "CONC_GRS"
 
   /// Grass.
-  public static let grass = Self(rawValue: "GRASS")
-
-  /// Gravel.
-  public static let gravel = Self(rawValue: "GRAVEL")
+  case grass = "GRASS"
 
   /// Sand.
-  public static let sand = Self(rawValue: "SAND")
-
-  /// Earth or soil.
-  public static let earth = Self(rawValue: "EARTH")
-
-  /// Clay.
-  public static let clay = Self(rawValue: "CLAY")
-
-  /// Laterite.
-  public static let laterite = Self(rawValue: "LATERITE")
-
-  /// Coral.
-  public static let coral = Self(rawValue: "CORAL")
-
-  /// Ice.
-  public static let ice = Self(rawValue: "ICE")
-
-  /// Snow.
-  public static let snow = Self(rawValue: "SNOW")
+  case sand = "SAND"
 
   /// Water.
-  public static let water = Self(rawValue: "WATER")
+  case water = "WATER"
 
-  private static let aliases = [
-    "GRAVE": "GRAVEL",
-    "GRS": "GRASS",
-    "CONC+ASPH": "CONC_ASPH",
-    "CONC+GRS": "CONC_GRS",
-    "ASPH+GRASS": "ASPH_GRASS"
+  /// Bituminous surface.
+  case bitumen = "BITUM"
+
+  /// Brick.
+  case brick = "BRICK"
+
+  /// Macadam.
+  case macadam = "MACADAM"
+
+  /// Stone.
+  case stone = "STONE"
+
+  /// Coral.
+  case coral = "CORAL"
+
+  /// Clay.
+  case clay = "CLAY"
+
+  /// Laterite.
+  case laterite = "LATERITE"
+
+  /// Gravel.
+  case gravel = "GRAVEL"
+
+  /// Graded or rolled earth (AIXM 4.5).
+  case gradedEarth = "GRADE"
+
+  /// Earth.
+  case earth = "EARTH"
+
+  /// Ice.
+  case ice = "ICE"
+
+  /// Snow.
+  case snow = "SNOW"
+
+  /// A membrane laid over the ground.
+  case membrane = "MEMBRANE"
+
+  /// Metal.
+  case metal = "METAL"
+
+  /// Landing mats.
+  case mats = "MATS"
+
+  /// Pierced steel planking.
+  case piercedSteel = "PIERCED_STEEL"
+
+  /// Wood.
+  case wood = "WOOD"
+
+  /// A non-bituminous mix.
+  case nonBituminousMix = "NON_BITUM_MIX"
+
+  /// A material the data set describes as `OTHER`.
+  case other = "OTHER"
+
+  /// AIXM 4.5 and open flightmaps spellings of AIXM 5.1 codes.
+  private static let AIXM45Codes: [String: Self] = [
+    "ASP+GRS": .asphaltAndGrass,
+    "CONC+ASPH": .concreteAndAsphalt,
+    "CONC+GRS": .concreteAndGrass,
+    "GRAVE": .gravel,
+    "PSP": .piercedSteel
   ]
 
-  private static var pavedCompositions: Set<Self> {
-    [
-      .asphalt, .concrete, .concreteAndAsphalt, .bitumen, .nonBituminousMix, .macadam, .brick,
-      .metal, .piercedSteelPlanking
-    ]
-  }
-
-  /// The code as written in AIXM 5.1.
-  public let rawValue: String
-
-  /// Whether the surface is sealed: concrete, asphalt, bitumen, macadam, brick, or metal.
+  /// Whether the surface is sealed.
   public var isPaved: Bool {
-    Self.pavedCompositions.contains(self)
+    switch self {
+      case .asphalt, .concrete, .concreteAndAsphalt, .bitumen, .brick, .macadam, .metal,
+        .piercedSteel, .nonBituminousMix:
+        true
+      default: false
+    }
   }
 
-  /// Creates a value from its code as written in the data set.
-  public init(rawValue: String) {
-    self.rawValue = Self.aliases[rawValue] ?? rawValue
+  /// Reads a code as written in an AIXM 5.1, AIXM 4.5, or OFMX data set.
+  init?(code: String) {
+    guard let value = Self(rawValue: code) ?? Self.AIXM45Codes[code] ?? Self(otherCode: code) else {
+      return nil
+    }
+    self = value
   }
 }

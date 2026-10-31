@@ -27,7 +27,13 @@ struct SwiftAIXM_E2E: ParsableCommand {
     var errors = [String: Int]()
     let start = Date.now
     let dataset = try AIXMDataset(url: file, effectiveDate: effectiveDate) { error in
-      errors[String(describing: error).prefix { $0 != "(" }.description, default: 0] += 1
+      if case let AIXMRecordError.invalidValue(feature, _, field, value) = error {
+        errors["\(feature).\(field)=\(value)", default: 0] += 1
+      } else if case let AIXMRecordError.missingValue(feature, _, field) = error {
+        errors["\(feature).\(field) missing", default: 0] += 1
+      } else {
+        errors[String(describing: error).prefix { $0 != "(" }.description, default: 0] += 1
+      }
     }
     let elapsed = Date.now.timeIntervalSince(start)
 
