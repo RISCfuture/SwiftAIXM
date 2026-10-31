@@ -25,7 +25,8 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-argument-parser", from: "1.8.2"),
-    .package(url: "https://github.com/swiftlang/swift-docc-plugin.git", from: "1.5.0")
+    .package(url: "https://github.com/swiftlang/swift-docc-plugin.git", from: "1.5.0"),
+    .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.20")
   ],
   targets: [
     .target(
@@ -43,7 +44,8 @@ let package = Package(
       name: "SwiftAIXM_E2E",
       dependencies: [
         "SwiftAIXM",
-        .product(name: "ArgumentParser", package: "swift-argument-parser")
+        .product(name: "ArgumentParser", package: "swift-argument-parser"),
+        .product(name: "ZIPFoundation", package: "ZIPFoundation")
       ],
       swiftSettings: swiftSettings
     )

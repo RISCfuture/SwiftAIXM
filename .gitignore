@@ -13,4 +13,7 @@ DerivedData/
 
 # swift-format (downloaded in CI)
 .swift-format
+
+# Data sets SwiftAIXM_E2E downloads, and its reports
+.SwiftAIXM_TestData/
 .claude/settings.local.json
