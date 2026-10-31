@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message:AIXMBasicMessage xmlns:aixm="http://www.aixm.aero/schema/5.1"
+                          xmlns:gml="http://www.opengis.net/gml/3.2"
+                          xmlns:message="http://www.aixm.aero/schema/5.1/message"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          gml:id="message">
+   <message:hasMember>
+      <aixm:AirportHeliport gml:id="changing">
+         <gml:identifier codeSpace="urn:uuid:">00000000-0000-0000-0000-000000000001</gml:identifier>
+         <aixm:timeSlice>
+            <aixm:AirportHeliportTimeSlice gml:id="changing-1">
+               <gml:validTime>
+                  <gml:TimePeriod gml:id="changing-1-valid">
+                     <gml:beginPosition>2026-01-01T00:00:00Z</gml:beginPosition>
+                     <gml:endPosition indeterminatePosition="unknown"/>
+                  </gml:TimePeriod>
+               </gml:validTime>
+               <aixm:interpretation>BASELINE</aixm:interpretation>
+               <aixm:sequenceNumber>1</aixm:sequenceNumber>
+               <aixm:correctionNumber>0</aixm:correctionNumber>
+               <aixm:designator>XXAA</aixm:designator>
+               <aixm:name>CURRENT NAME</aixm:name>
+            </aixm:AirportHeliportTimeSlice>
+         </aixm:timeSlice>
+         <aixm:timeSlice>
+            <aixm:AirportHeliportTimeSlice gml:id="changing-2">
+               <gml:validTime>
+                  <gml:TimePeriod gml:id="changing-2-valid">
+                     <gml:beginPosition>2026-11-26T00:00:00Z</gml:beginPosition>
+                     <gml:endPosition indeterminatePosition="unknown"/>
+                  </gml:TimePeriod>
+               </gml:validTime>
+               <aixm:interpretation>BASELINE</aixm:interpretation>
+               <aixm:sequenceNumber>2</aixm:sequenceNumber>
+               <aixm:correctionNumber>0</aixm:correctionNumber>
+               <aixm:designator>XXAA</aixm:designator>
+               <aixm:name>FUTURE NAME</aixm:name>
+            </aixm:AirportHeliportTimeSlice>
+         </aixm:timeSlice>
+         <aixm:timeSlice>
+            <aixm:AirportHeliportTimeSlice gml:id="changing-3">
+               <gml:validTime>
+                  <gml:TimePeriod gml:id="changing-3-valid">
+                     <gml:beginPosition>2026-10-01T00:00:00Z</gml:beginPosition>
+                     <gml:endPosition>2026-12-01T00:00:00Z</gml:endPosition>
+                  </gml:TimePeriod>
+               </gml:validTime>
+               <aixm:interpretation>TEMPDELTA</aixm:interpretation>
+               <aixm:sequenceNumber>3</aixm:sequenceNumber>
+               <aixm:correctionNumber>0</aixm:correctionNumber>
+               <aixm:name>TEMPORARY NAME</aixm:name>
+            </aixm:AirportHeliportTimeSlice>
+         </aixm:timeSlice>
+      </aixm:AirportHeliport>
+   </message:hasMember>
+   <message:hasMember>
+      <aixm:AirportHeliport gml:id="closed">
+         <gml:identifier codeSpace="urn:uuid:">00000000-0000-0000-0000-000000000002</gml:identifier>
+         <aixm:timeSlice>
+            <aixm:AirportHeliportTimeSlice gml:id="closed-1">
+               <gml:validTime>
+                  <gml:TimePeriod gml:id="closed-1-valid">
+                     <gml:beginPosition>2020-01-01T00:00:00Z</gml:beginPosition>
+                     <gml:endPosition indeterminatePosition="unknown"/>
+                  </gml:TimePeriod>
+               </gml:validTime>
+               <aixm:interpretation>BASELINE</aixm:interpretation>
+               <aixm:sequenceNumber>1</aixm:sequenceNumber>
+               <aixm:correctionNumber>0</aixm:correctionNumber>
+               <aixm:featureLifetime>
+                  <gml:TimePeriod gml:id="closed-1-lifetime">
+                     <gml:beginPosition>2020-01-01T00:00:00Z</gml:beginPosition>
+                     <gml:endPosition>2026-06-01T00:00:00Z</gml:endPosition>
+                  </gml:TimePeriod>
+               </aixm:featureLifetime>
+               <aixm:designator>XXBB</aixm:designator>
+               <aixm:name>CLOSED</aixm:name>
+            </aixm:AirportHeliportTimeSlice>
+         </aixm:timeSlice>
+      </aixm:AirportHeliport>
+   </message:hasMember>
+</message:AIXMBasicMessage>

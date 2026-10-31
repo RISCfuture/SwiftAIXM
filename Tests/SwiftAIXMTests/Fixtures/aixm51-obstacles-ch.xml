@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message:AIXMBasicMessage xmlns:adbs-dcs="http://www.skyguide.ch/aim/adbs/dcs" xmlns:aixm="http://www.aixm.aero/schema/5.1" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:message="http://www.aixm.aero/schema/5.1/message" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" gml:id="gmlID9301487">
+  
+  <message:hasMember>
+    <aixm:VerticalStructure gml:id="gmlID9301489">
+      <gml:identifier codeSpace="urn:uuid:">52bd48bb-2483-49ad-b2cb-f6c63fd2d7f0</gml:identifier>
+      <aixm:timeSlice>
+        <aixm:VerticalStructureTimeSlice gml:id="gmlID9301490">
+          <gml:validTime>
+            <gml:TimePeriod gml:id="gmlID9301496">
+              <gml:beginPosition>1950-01-01T00:00:00.000Z</gml:beginPosition>
+              <gml:endPosition indeterminatePosition="unknown"/>
+            </gml:TimePeriod>
+          </gml:validTime>
+          <aixm:interpretation>BASELINE</aixm:interpretation>
+          <aixm:sequenceNumber>1</aixm:sequenceNumber>
+          <aixm:correctionNumber>1</aixm:correctionNumber>
+          <aixm:featureLifetime>
+            <gml:TimePeriod gml:id="gmlID9301499">
+              <gml:beginPosition>1950-01-01T00:00:00.000Z</gml:beginPosition>
+              <gml:endPosition indeterminatePosition="unknown"/>
+            </gml:TimePeriod>
+          </aixm:featureLifetime>
+          <aixm:name>245NW30434</aixm:name>
+          <aixm:type>VEGETATION</aixm:type>
+          <aixm:lighted>NO</aixm:lighted>
+          <aixm:group>NO</aixm:group>
+          <aixm:radius xsi:nil="true" nilReason="unknown"/>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301502">
+              <aixm:verticalExtent uom="M">16</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301513">
+                  <gml:pos>8.37464869 46.97553642</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="unknown"/>
+                  <aixm:elevation uom="M">571.6</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="unknown"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="unknown"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+        </aixm:VerticalStructureTimeSlice>
+      </aixm:timeSlice>
+    </aixm:VerticalStructure>
+  </message:hasMember>
+   <message:hasMember>
+    <aixm:VerticalStructure gml:id="gmlID9301911">
+      <gml:identifier codeSpace="urn:uuid:">e4239d54-7375-45b8-8f5a-0ada558f3f4b</gml:identifier>
+      <aixm:timeSlice>
+        <aixm:VerticalStructureTimeSlice gml:id="gmlID9301914">
+          <gml:validTime>
+            <gml:TimePeriod gml:id="gmlID9301918">
+              <gml:beginPosition>2025-12-18T13:13:31.000Z</gml:beginPosition>
+              <gml:endPosition indeterminatePosition="unknown"/>
+            </gml:TimePeriod>
+          </gml:validTime>
+          <aixm:interpretation>BASELINE</aixm:interpretation>
+          <aixm:sequenceNumber>1</aixm:sequenceNumber>
+          <aixm:correctionNumber>0</aixm:correctionNumber>
+          <aixm:featureLifetime>
+            <gml:TimePeriod gml:id="gmlID9301922">
+              <gml:beginPosition>2025-12-18T13:13:31.000Z</gml:beginPosition>
+              <gml:endPosition indeterminatePosition="unknown"/>
+            </gml:TimePeriod>
+          </aixm:featureLifetime>
+          <aixm:name>TL25003645</aixm:name>
+          <aixm:type>TRANSMISSION_LINE</aixm:type>
+          <aixm:lighted xsi:nil="true" nilReason="inapplicable"/>
+          <aixm:group>NO</aixm:group>
+          <aixm:radius xsi:nil="true" nilReason="inapplicable"/>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301926">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301935">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.79264352 47.20249911 8.79354691 47.2023736</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301938">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301946">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.79354691 47.2023736 8.7946758 47.20226072</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301949">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301957">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.7946758 47.20226072 8.79637277 47.2020733</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301959">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301965">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.79637277 47.2020733 8.7980717 47.20193792</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301966">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301971">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.7980717 47.20193792 8.79977921 47.2018026</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301972">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301980">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.79977921 47.2018026 8.80148254 47.20167449</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301981">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301986">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.80148254 47.20167449 8.80318707 47.2015369</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301987">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301992">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.80318707 47.2015369 8.80487396 47.2012982</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301993">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9301998">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.80487396 47.2012982 8.80657442 47.20116186</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9301999">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302004">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.80657442 47.20116186 8.80825323 47.20102621</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302005">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302010">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.80825323 47.20102621 8.8099592 47.20082247</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302011">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302016">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.8099592 47.20082247 8.81141423 47.20021265</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302017">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302022">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.81141423 47.20021265 8.81259106 47.19930745</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302023">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302028">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.81259106 47.19930745 8.81330405 47.1982643</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302029">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302034">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.81330405 47.1982643 8.81426934 47.19710694</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302035">
+              <aixm:verticalExtent xsi:nil="true" nilReason="unknown"/>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_linearExtent>
+                <aixm:ElevatedCurve srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302040">
+                  <gml:segments>
+                    <gml:GeodesicString>
+                      <gml:posList>8.81426934 47.19710694 8.81516275 47.19601466</gml:posList>
+                    </gml:GeodesicString>
+                  </gml:segments>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedCurve>
+              </aixm:horizontalProjection_linearExtent>
+              <aixm:lighting nilReason="unknown" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302041">
+              <aixm:verticalExtent uom="M">28.7</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302047">
+                  <gml:pos>8.79264352 47.20249911</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">443.06</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302048">
+              <aixm:verticalExtent uom="M">31.97</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302054">
+                  <gml:pos>8.79354691 47.2023736</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">446.49</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302055">
+              <aixm:verticalExtent uom="M">27.24</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302061">
+                  <gml:pos>8.7946758 47.20226072</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">441.94</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302062">
+              <aixm:verticalExtent uom="M">27.15</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302068">
+                  <gml:pos>8.79637277 47.2020733</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">442.97</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302069">
+              <aixm:verticalExtent uom="M">27.19</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302075">
+                  <gml:pos>8.7980717 47.20193792</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">443.2</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302076">
+              <aixm:verticalExtent uom="M">27.22</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302082">
+                  <gml:pos>8.79977921 47.2018026</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">443.27</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302083">
+              <aixm:verticalExtent uom="M">27.25</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302089">
+                  <gml:pos>8.80148254 47.20167449</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">442.83</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302090">
+              <aixm:verticalExtent uom="M">27.11</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302096">
+                  <gml:pos>8.80318707 47.2015369</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">442.33</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302097">
+              <aixm:verticalExtent uom="M">27.24</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302103">
+                  <gml:pos>8.80487396 47.2012982</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">441.77</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302104">
+              <aixm:verticalExtent uom="M">27.24</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302110">
+                  <gml:pos>8.80657442 47.20116186</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">440.95</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302111">
+              <aixm:verticalExtent uom="M">27.31</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302117">
+                  <gml:pos>8.80825323 47.20102621</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">441.14</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302118">
+              <aixm:verticalExtent uom="M">26.69</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302124">
+                  <gml:pos>8.8099592 47.20082247</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">440.27</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302125">
+              <aixm:verticalExtent uom="M">28.45</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302131">
+                  <gml:pos>8.81141423 47.20021265</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">441.54</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302132">
+              <aixm:verticalExtent uom="M">28.57</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302138">
+                  <gml:pos>8.81259106 47.19930745</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">440.74</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302139">
+              <aixm:verticalExtent uom="M">27.32</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302145">
+                  <gml:pos>8.81330405 47.1982643</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">439.55</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302146">
+              <aixm:verticalExtent uom="M">27.42</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302152">
+                  <gml:pos>8.81426934 47.19710694</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">438.84</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+          <aixm:part>
+            <aixm:VerticalStructurePart gml:id="gmlID9302153">
+              <aixm:verticalExtent uom="M">33</aixm:verticalExtent>
+              <aixm:markingPattern xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingFirstColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:markingSecondColour xsi:nil="true" nilReason="inapplicable"/>
+              <aixm:mobile>NO</aixm:mobile>
+              <aixm:horizontalProjection_location>
+                <aixm:ElevatedPoint srsName="urn:ogc:def:crs:OGC:1.3:CRS84" gml:id="gmlID9302159">
+                  <gml:pos>8.81516275 47.19601466</gml:pos>
+                  <aixm:horizontalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:elevation uom="M">442.35</aixm:elevation>
+                  <aixm:geoidUndulation xsi:nil="true" nilReason="inapplicable"/>
+                  <aixm:verticalDatum>OTHER:LN02</aixm:verticalDatum>
+                  <aixm:verticalAccuracy xsi:nil="true" nilReason="inapplicable"/>
+                </aixm:ElevatedPoint>
+              </aixm:horizontalProjection_location>
+              <aixm:lighting nilReason="inapplicable" xsi:nil="true"/>
+            </aixm:VerticalStructurePart>
+          </aixm:part>
+        </aixm:VerticalStructureTimeSlice>
+      </aixm:timeSlice>
+    </aixm:VerticalStructure>
+  </message:hasMember>
+   <message:hasMember>
+    <aixm:VerticalStructure gml:id="gmlID9307182">
+      <gml:identifier codeSpace="urn:uuid:">ddcb6a54-d066-42bf-ab98-3b937c4011e3</gml:identifier>
+      <aixm:timeSlice>
+        <aixm:VerticalStructureTimeSlice gml:id="gmlID9307185">
+          <gml:validTime>
+            <gml:TimePeriod gml:id="gmlID9307191">
+              <gml:beginPosition>2025-08-29T08:41:26.000Z</gml:beginPosition>
+              <gml:endPosition indeterminatePosition="unknown"/>
+            </gml:TimePeriod>
+          </gml:validTime>
+          <aixm:interpretation>BASELINE</aixm:interpretation>
+          <aixm:sequenceNumber>2</aixm:sequenceNumber>
+          <aixm:correctionNumber>0</aixm:correctionNumber>
+          <aixm:featureLifetime>
+            <gml:TimePeriod gml:id="gmlID9307195">
+              <gml:beginPosition>2000-08-31T00:00:00.000Z</gml:beginPosition>
+              <gml:endPosition indeterminatePosition="unknown"/>
+            </gml:TimePeriod>
+          </aixm:featureLifetime>
+          <aixm:name>263BE20020</aixm:name>
+          <aixm:type>CATENARY</aixm:type>
+          <aixm:lighted>NO</aixm:lighted>
+          <aixm:group>NO</aixm:group>
+          <aixm:radius xsi:nil="true" nilReason="inapplicable"/>
+          <aixm:part xsi:nil="true"/>
+          <aixm:part xsi:nil="true"/>
+          <aixm:part xsi:nil="true"/>
+        </aixm:VerticalStructureTimeSlice>
+      </aixm:timeSlice>
+    </aixm:VerticalStructure>
+  </message:hasMember>
+</message:AIXMBasicMessage>

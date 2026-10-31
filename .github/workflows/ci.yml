@@ -1,0 +1,101 @@
+# CI Matrix Policy
+#
+# Category A (tools-version 6.2 + macOS 26 min): macos-26 + Swift 6.2
+# Category B (tools-version 6.2 + older macOS):  macos-15 + 6.2, macos-26 + 6.2
+# Category C (tools-version 6.3):                macos-15 + 6.3, macos-26 + 6.3
+# Linux:                                         ubuntu + Swift 6.3
+#
+# This package is Category A, plus a Linux leg. Test names are raw
+# identifiers (SE-0451), so a leg must be on Swift 6.2 or newer to run `swift test`;
+# a leg on an older compiler is limited to `swift build -v`.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Build and Test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-26
+            swift: "6.2"
+          - os: macos-26
+            swift: "6.4"
+          # Swift 6.3 has no Ubuntu 26.04 toolchain; the 24.04 one needs libxml2.so.2, which
+          # 26.04 does not ship.
+          - os: ubuntu-24.04
+            swift: "6.3"
+          - os: ubuntu-latest
+            swift: "6.4"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: SwiftyLab/setup-swift@latest
+        with:
+          swift-version: ${{ matrix.swift }}
+      - name: Cache SwiftPM build products
+        uses: actions/cache@v6
+        with:
+          path: |
+            .build
+            ~/.cache/org.swift.swiftpm
+            ~/Library/Caches/org.swift.swiftpm
+          key: swiftpm-test-${{ matrix.os }}-swift${{ matrix.swift }}-${{ hashFiles('Package.resolved') }}
+      - name: Build
+        run: swift build -v
+      - name: Test
+        run: swift test -v
+  docs:
+    name: Build Documentation
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v6
+      - uses: SwiftyLab/setup-swift@latest
+        with:
+          swift-version: "6.2"
+      - name: Cache SwiftPM build products
+        uses: actions/cache@v6
+        with:
+          path: |
+            .build
+            ~/.cache/org.swift.swiftpm
+            ~/Library/Caches/org.swift.swiftpm
+          key: swiftpm-docs-macos-26-swift6.2-${{ hashFiles('Package.resolved') }}
+      - name: Build documentation
+        run: |
+          swift package \
+           --allow-writing-to-directory "$RUNNER_TEMP/docs" \
+           generate-documentation --target SwiftAIXM --output-path "$RUNNER_TEMP/docs" \
+           --warnings-as-errors
+  lint:
+    name: Run SwiftLint
+    runs-on: ubuntu-latest
+    container: ghcr.io/realm/swiftlint:latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run SwiftLint
+        run: swiftlint --strict
+  swift-format:
+    name: Run swift-format
+    runs-on: ubuntu-latest
+    container:
+      image: swift:latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Download .swift-format config
+        run: |
+          apt-get update && apt-get install -y wget
+          wget -O .swift-format https://gist.githubusercontent.com/RISCfuture/e0c21afb7bd80a88d128a42bf40d2ecd/raw/.swift-format
+      - name: Run swift-format lint
+        run: swift format lint --strict -r .

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OFMX-Snapshot version="0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.openflightmaps.org/0.1/OFMX-Snapshot.xsd" effective="2026-10-23T20:15:34Z" origin="ofmx editor v1.0.62" created="2026-10-23T20:15:34Z" namespace="210444d1-4576-e92d-0983-4669182a8c04">
+  <Ahp>
+    <AhpUid mid="2f9bc8cb-fe4f-7ded-913a-8e509d11335f" region="LJLA">
+      <codeId>LJPZ</codeId>
+    </AhpUid>
+    <OrgUid mid="e09509b9-2529-65ed-820c-c1414f48d45e" region="LJLA">
+      <txtName>LJLA</txtName>
+    </OrgUid>
+    <txtName>PORTOROZ/SECOVLJE</txtName>
+    <codeIcao>LJPZ</codeIcao>
+    <codeType>AD</codeType>
+    <geoLat>45.47334722N</geoLat>
+    <geoLong>013.61497500E</geoLong>
+    <codeDatum>WGE</codeDatum>
+    <valElev>2</valElev>
+    <uomDistVer>M</uomDistVer>
+    <txtNameCitySer>PORTOROZ</txtNameCitySer>
+    <valMagVar>4</valMagVar>
+    <dateMagVar>2025</dateMagVar>
+    <valRefT>30.3</valRefT>
+    <uomRefT>C</uomRefT>
+    <txtNameAdmin>AERODROM PORTOROŽ
+SECOVLJE 19
+SI-6333 SEČOVLJE
+SLOVENIA
+
+PHONE: +386 5 6175 140
+FAX: +386 5 6722 530
+EMAIL: INFO@PORTOROZ-AIRPORT.SI
+
+MON-SUN: 07:30 - 16:00 (08:00 - 16:30)</txtNameAdmin>
+    <valTransitionAlt>10500</valTransitionAlt>
+    <uomTransitionAlt>FT</uomTransitionAlt>
+    <Aht>
+      <codeWorkHr>TIMSH</codeWorkHr>
+      <Timsh>
+        <codeTimeRef>UTC</codeTimeRef>
+        <dateValidWef>29-03</dateValidWef>
+        <dateValidTil>24-10</dateValidTil>
+        <codeDay>MON</codeDay>
+        <codeDayTil>SUN</codeDayTil>
+        <timeWef>07:30</timeWef>
+        <timeTil>18:00</timeTil>
+      </Timsh>
+      <Timsh>
+        <codeTimeRef>UTC</codeTimeRef>
+        <dateValidWef>26-10</dateValidWef>
+        <dateValidTil>28-03</dateValidTil>
+        <codeDay>MON</codeDay>
+        <codeDayTil>SUN</codeDayTil>
+        <timeWef>07:00</timeWef>
+        <timeTil>15:30</timeTil>
+      </Timsh>
+    </Aht>
+    <txtRmk>-No visual contact between TWR and ACFT near THR 33. Caution advised during landing and take-off.
+
+-Sea bird strike hazard present throughout the whole year.
+
+ MET consulting via Phone +386 4 2804 500</txtRmk>
+  </Ahp>
+  <Ahp>
+    <AhpUid mid="41124a5a-d08d-4f52-5b10-59c694339906" region="LJLA">
+      <codeId>LJLJ</codeId>
+    </AhpUid>
+    <OrgUid mid="e09509b9-2529-65ed-820c-c1414f48d45e" region="LJLA">
+      <txtName>LJLA</txtName>
+    </OrgUid>
+    <txtName>LJUBLJANA / BRNIK</txtName>
+    <codeIcao>LJLJ</codeIcao>
+    <codeIata>LJU</codeIata>
+    <codeType>AD</codeType>
+    <geoLat>46.22444444N</geoLat>
+    <geoLong>014.45611111E</geoLong>
+    <codeDatum>WGE</codeDatum>
+    <valElev>388</valElev>
+    <uomDistVer>M</uomDistVer>
+    <txtNameCitySer>LJUBLJANA</txtNameCitySer>
+    <valMagVar>5</valMagVar>
+    <dateMagVar>2025</dateMagVar>
+    <valRefT>27.5</valRefT>
+    <uomRefT>F</uomRefT>
+    <txtNameAdmin>FRAPORT SLOVENIJA, D.O.O.
+ZG. BRNIK 130A
+SI-4210 BRNIK-AERODROM
+SLOVENIA
++386 4 2061 000 (ADMINISTRATION)
++386 4 2061 206 (AIRPORT DUTY MANAGER)
++386 4 2061 215 (NETWORK MANAGEMENT)
++386 4 2061 492 (GENERAL AVIATION)
++386 4 2061 217 (ADMINISTRATION)
++386 4 2061 209 (AIRPORT DUTY MANAGER)</txtNameAdmin>
+    <valTransitionAlt>10500</valTransitionAlt>
+    <uomTransitionAlt>FT</uomTransitionAlt>
+  </Ahp>
+  <Rwy>
+    <RwyUid mid="f93cc372-180a-cbad-c744-f0045f4448a6">
+      <AhpUid mid="2f9bc8cb-fe4f-7ded-913a-8e509d11335f" region="LJLA">
+        <codeId>LJPZ</codeId>
+      </AhpUid>
+      <txtDesig>15/33</txtDesig>
+    </RwyUid>
+    <valLen>1200</valLen>
+    <valWid>30</valWid>
+    <uomDimRwy>M</uomDimRwy>
+    <codeComposition>ASPH</codeComposition>
+    <codePreparation>PAVED</codePreparation>
+    <valPcnClass>35</valPcnClass>
+    <codePcnPavementType>F</codePcnPavementType>
+    <codePcnPavementSubgrade>C</codePcnPavementSubgrade>
+    <codePcnMaxTirePressure>X</codePcnMaxTirePressure>
+    <codePcnEvalMethod>T</codePcnEvalMethod>
+    <valLenStrip>1320</valLenStrip>
+    <valWidStrip>80</valWidStrip>
+    <uomDimStrip>M</uomDimStrip>
+  </Rwy>
+  <Rwy>
+    <RwyUid mid="39acbdde-5a3e-df5d-de05-b394a85fa431">
+      <AhpUid mid="41124a5a-d08d-4f52-5b10-59c694339906" region="LJLA">
+        <codeId>LJLJ</codeId>
+      </AhpUid>
+      <txtDesig>12/30</txtDesig>
+    </RwyUid>
+    <valLen>3300</valLen>
+    <valWid>45</valWid>
+    <uomDimRwy>M</uomDimRwy>
+    <codeComposition>ASPH</codeComposition>
+    <codePreparation>PAVED</codePreparation>
+    <valPcnClass>110</valPcnClass>
+    <codePcnPavementType>F</codePcnPavementType>
+    <codePcnPavementSubgrade>B</codePcnPavementSubgrade>
+    <codePcnMaxTirePressure>X</codePcnMaxTirePressure>
+    <codePcnEvalMethod>T</codePcnEvalMethod>
+    <valLenStrip>3420</valLenStrip>
+    <valWidStrip>300</valWidStrip>
+    <uomDimStrip>M</uomDimStrip>
+  </Rwy>
+  <Rdn>
+    <RdnUid mid="8d756377-651f-ce4a-17e2-cc6d494057f2">
+      <RwyUid mid="f93cc372-180a-cbad-c744-f0045f4448a6">
+        <AhpUid mid="2f9bc8cb-fe4f-7ded-913a-8e509d11335f" region="LJLA">
+          <codeId>LJPZ</codeId>
+        </AhpUid>
+        <txtDesig>15/33</txtDesig>
+      </RwyUid>
+      <txtDesig>15</txtDesig>
+    </RdnUid>
+    <geoLat>45.47717778N</geoLat>
+    <geoLong>013.61198333E</geoLong>
+    <valTrueBrg>151</valTrueBrg>
+    <valMagBrg>147</valMagBrg>
+  </Rdn>
+  <Rdn>
+    <RdnUid mid="cd92a306-a77e-01ab-a229-02ac0afa73a1">
+      <RwyUid mid="f93cc372-180a-cbad-c744-f0045f4448a6">
+        <AhpUid mid="2f9bc8cb-fe4f-7ded-913a-8e509d11335f" region="LJLA">
+          <codeId>LJPZ</codeId>
+        </AhpUid>
+        <txtDesig>15/33</txtDesig>
+      </RwyUid>
+      <txtDesig>33</txtDesig>
+    </RdnUid>
+    <geoLat>45.46952222N</geoLat>
+    <geoLong>013.61796111E</geoLong>
+    <valTrueBrg>331</valTrueBrg>
+    <valMagBrg>327</valMagBrg>
+  </Rdn>
+  <Rdn>
+    <RdnUid mid="0b27d228-04b7-9235-d266-61f74bf91c8e">
+      <RwyUid mid="39acbdde-5a3e-df5d-de05-b394a85fa431">
+        <AhpUid mid="41124a5a-d08d-4f52-5b10-59c694339906" region="LJLA">
+          <codeId>LJLJ</codeId>
+        </AhpUid>
+        <txtDesig>12/30</txtDesig>
+      </RwyUid>
+      <txtDesig>12</txtDesig>
+    </RdnUid>
+    <geoLat>46.23249167N</geoLat>
+    <geoLong>014.44039167E</geoLong>
+    <valTrueBrg>126</valTrueBrg>
+    <valMagBrg>122</valMagBrg>
+  </Rdn>
+  <Rdn>
+    <RdnUid mid="9b736740-7deb-00c3-bc70-c3c48d9e6327">
+      <RwyUid mid="39acbdde-5a3e-df5d-de05-b394a85fa431">
+        <AhpUid mid="41124a5a-d08d-4f52-5b10-59c694339906" region="LJLA">
+          <codeId>LJLJ</codeId>
+        </AhpUid>
+        <txtDesig>12/30</txtDesig>
+      </RwyUid>
+      <txtDesig>30</txtDesig>
+    </RdnUid>
+    <geoLat>46.21487778N</geoLat>
+    <geoLong>014.47482500E</geoLong>
+    <valTrueBrg>306</valTrueBrg>
+    <valMagBrg>302</valMagBrg>
+  </Rdn>
+  <Rdd>
+    <RddUid mid="3c476bad-3ede-5a16-37d7-249ab480358d">
+      <RdnUid mid="cd92a306-a77e-01ab-a229-02ac0afa73a1">
+        <RwyUid mid="f93cc372-180a-cbad-c744-f0045f4448a6">
+          <AhpUid mid="2f9bc8cb-fe4f-7ded-913a-8e509d11335f" region="LJLA">
+            <codeId>LJPZ</codeId>
+          </AhpUid>
+          <txtDesig>15/33</txtDesig>
+        </RwyUid>
+        <txtDesig>33</txtDesig>
+      </RdnUid>
+      <codeType>DPLM</codeType>
+      <codeDayPeriod>A</codeDayPeriod>
+    </RddUid>
+    <valDist>210</valDist>
+    <uomDist>M</uomDist>
+  </Rdd>
+  <Rdd>
+    <RddUid mid="405bf904-b841-c611-7265-fb33e5e58036">
+      <RdnUid mid="0b27d228-04b7-9235-d266-61f74bf91c8e">
+        <RwyUid mid="39acbdde-5a3e-df5d-de05-b394a85fa431">
+          <AhpUid mid="41124a5a-d08d-4f52-5b10-59c694339906" region="LJLA">
+            <codeId>LJLJ</codeId>
+          </AhpUid>
+          <txtDesig>12/30</txtDesig>
+        </RwyUid>
+        <txtDesig>12</txtDesig>
+      </RdnUid>
+      <codeType>TORA</codeType>
+      <codeDayPeriod>A</codeDayPeriod>
+    </RddUid>
+    <valDist>3300</valDist>
+    <uomDist>M</uomDist>
+  </Rdd>
+  <Rdd>
+    <RddUid mid="f84abcd1-a09d-0d75-534f-76ddea9b82a9">
+      <RdnUid mid="0b27d228-04b7-9235-d266-61f74bf91c8e">
+        <RwyUid mid="39acbdde-5a3e-df5d-de05-b394a85fa431">
+          <AhpUid mid="41124a5a-d08d-4f52-5b10-59c694339906" region="LJLA">
+            <codeId>LJLJ</codeId>
+          </AhpUid>
+          <txtDesig>12/30</txtDesig>
+        </RwyUid>
+        <txtDesig>12</txtDesig>
+      </RdnUid>
+      <codeType>LDA</codeType>
+      <codeDayPeriod>A</codeDayPeriod>
+    </RddUid>
+    <valDist>3300</valDist>
+    <uomDist>M</uomDist>
+  </Rdd>
+  <Rdd>
+    <RddUid mid="f77c1713-cd50-3450-45bc-0412a3ab679d">
+      <RdnUid mid="9b736740-7deb-00c3-bc70-c3c48d9e6327">
+        <RwyUid mid="39acbdde-5a3e-df5d-de05-b394a85fa431">
+          <AhpUid mid="41124a5a-d08d-4f52-5b10-59c694339906" region="LJLA">
+            <codeId>LJLJ</codeId>
+          </AhpUid>
+          <txtDesig>12/30</txtDesig>
+        </RwyUid>
+        <txtDesig>30</txtDesig>
+      </RdnUid>
+      <codeType>TORA</codeType>
+      <codeDayPeriod>A</codeDayPeriod>
+    </RddUid>
+    <valDist>3300</valDist>
+    <uomDist>M</uomDist>
+  </Rdd>
+  <Rdd>
+    <RddUid mid="91eb5c11-1cc3-5603-07a6-4999859477a6">
+      <RdnUid mid="9b736740-7deb-00c3-bc70-c3c48d9e6327">
+        <RwyUid mid="39acbdde-5a3e-df5d-de05-b394a85fa431">
+          <AhpUid mid="41124a5a-d08d-4f52-5b10-59c694339906" region="LJLA">
+            <codeId>LJLJ</codeId>
+          </AhpUid>
+          <txtDesig>12/30</txtDesig>
+        </RwyUid>
+        <txtDesig>30</txtDesig>
+      </RdnUid>
+      <codeType>LDA</codeType>
+      <codeDayPeriod>A</codeDayPeriod>
+    </RddUid>
+    <valDist>3300</valDist>
+    <uomDist>M</uomDist>
+  </Rdd>
+  <Obs>
+    <ObsUid>
+      <OgrUid>
+        <txtName>DROITWICH</txtName>
+        <geoLat>52.29638889N</geoLat>
+        <geoLong>002.10500000W</geoLong>
+      </OgrUid>
+      <geoLat>52.29638889N</geoLat>
+      <geoLong>002.10500000W</geoLong>
+    </ObsUid>
+    <txtName>DROITWICH LONGWAVE MAST</txtName>
+    <codeType>MAST</codeType>
+    <codeLgt>Y</codeLgt>
+    <valElev>848</valElev>
+    <valHgt>700</valHgt>
+    <uomDistVer>FT</uomDistVer>
+  </Obs>
+</OFMX-Snapshot>

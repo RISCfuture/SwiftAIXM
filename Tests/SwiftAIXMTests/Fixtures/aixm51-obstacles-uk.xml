@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<message:AIXMBasicMessage xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:aixm="http://www.aixm.aero/schema/5.1" xmlns:avitech="http://www.aixm.aero/schema/5.1/extensions/Avitech/eSDO" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:nats="http://www.aixm.aero/schema/5.1/extensions/NATS/eSDO" xmlns:message="http://www.aixm.aero/schema/5.1/message" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" gml:id="id1144416" xsi:schemaLocation="http://www.aixm.aero/schema/5.1/message http://www.aixm.aero/schema/5.1/message/AIXM_BasicMessage.xsd">
+    
+        <message:hasMember xlink:type="simple">
+		<aixm:VerticalStructure gml:id="id1000">
+			<gml:identifier codeSpace="urn:uuid:">f9dda65a-f32b-49dc-88aa-06bf7baf5f53</gml:identifier>
+			<gml:boundedBy xsi:nil="true" nilReason="unknown"/>
+			<aixm:timeSlice>
+				<aixm:VerticalStructureTimeSlice gml:id="id1001">
+					<gml:validTime xlink:type="simple">
+						<gml:TimeInstant gml:id="id1002">
+							<gml:timePosition>2023-09-29T00:00:00</gml:timePosition>
+						</gml:TimeInstant>
+					</gml:validTime>
+					<aixm:interpretation>BASELINE</aixm:interpretation>
+					<aixm:sequenceNumber>0</aixm:sequenceNumber>
+					<aixm:correctionNumber>0</aixm:correctionNumber>
+					<aixm:featureLifetime xlink:type="simple">
+						<gml:TimePeriod gml:id="id1003">
+							<gml:beginPosition>2009-11-01T00:00:00</gml:beginPosition>
+							<gml:endPosition indeterminatePosition="unknown"/>
+						</gml:TimePeriod>
+					</aixm:featureLifetime>
+					<aixm:name>UK0229G149F</aixm:name>
+					<aixm:type>TRANSMISSION_LINE</aixm:type>
+					<aixm:lighted>NO</aixm:lighted>
+					<aixm:markingICAOStandard xsi:nil="true" nilReason="unknown"/>
+					<aixm:group>NO</aixm:group>
+					<aixm:length xsi:nil="true" nilReason="unknown"/>
+					<aixm:width xsi:nil="true" nilReason="unknown"/>
+					<aixm:radius xsi:nil="true" nilReason="unknown"/><aixm:lightingICAOStandard xsi:nil="true" nilReason="unknown"/>
+					<aixm:synchronisedLighting xsi:nil="true" nilReason="unknown"/>
+					<aixm:marker xsi:nil="true" nilReason="unknown"/>
+					<aixm:part>
+                            <aixm:VerticalStructurePart gml:id="id1004">
+                <aixm:verticalExtent uom="FT">351</aixm:verticalExtent>
+                <aixm:verticalExtentAccuracy uom="FT">75</aixm:verticalExtentAccuracy>
+                <aixm:constructionStatus xsi:nil="true" nilReason="unknown"/><aixm:mobile xsi:nil="true" nilReason="unknown"/><aixm:frangible xsi:nil="true" nilReason="unknown"/><aixm:horizontalProjection_location><aixm:ElevatedPoint gml:id="id1007">
+		<gml:pos srsName="urn:ogc:def:crs:EPSG::4326">51.0665889 -3.6193167</gml:pos>
+		<aixm:horizontalAccuracy uom="FT">25</aixm:horizontalAccuracy>
+		<aixm:elevation uom="FT">977</aixm:elevation>
+		<aixm:geoidUndulation xsi:nil="true" nilReason="unknown"/><aixm:verticalDatum>OTHER:OSGM15</aixm:verticalDatum>
+		<aixm:verticalAccuracy uom="FT">77</aixm:verticalAccuracy>
+	</aixm:ElevatedPoint>
+</aixm:horizontalProjection_location>
+	        </aixm:VerticalStructurePart>
+        </aixm:part>
+				</aixm:VerticalStructureTimeSlice>
+			</aixm:timeSlice>
+		</aixm:VerticalStructure>
+	</message:hasMember>
+</message:AIXMBasicMessage>
