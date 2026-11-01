@@ -43,12 +43,12 @@ jobs:
             swift: "6.4"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v7
-      - uses: SwiftyLab/setup-swift@d60245579ea3836a3f2fa65ebbe1e8891d577c76  # v1.14.2
+      - uses: actions/checkout@v7.0.1
+      - uses: SwiftyLab/setup-swift@v1.14.2
         with:
           swift-version: ${{ matrix.swift }}
       - name: Cache SwiftPM build products
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: |
             .build
@@ -63,18 +63,18 @@ jobs:
     name: Build Documentation
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v7
-      - uses: SwiftyLab/setup-swift@d60245579ea3836a3f2fa65ebbe1e8891d577c76  # v1.14.2
+      - uses: actions/checkout@v7.0.1
+      - uses: SwiftyLab/setup-swift@v1.14.2
         with:
-          swift-version: "6.2"
+          swift-version: "6.4"
       - name: Cache SwiftPM build products
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: |
             .build
             ~/.cache/org.swift.swiftpm
             ~/Library/Caches/org.swift.swiftpm
-          key: swiftpm-docs-macos-26-swift6.2-${{ hashFiles('Package.resolved') }}
+          key: swiftpm-docs-macos-26-swift6.4-${{ hashFiles('Package.resolved') }}
       - name: Build documentation
         run: |
           swift package \
@@ -84,18 +84,18 @@ jobs:
   lint:
     name: Run SwiftLint
     runs-on: ubuntu-latest
-    container: ghcr.io/realm/swiftlint:latest
+    container: ghcr.io/realm/swiftlint:0.65.1
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
       - name: Run SwiftLint
         run: swiftlint --strict
   swift-format:
     name: Run swift-format
     runs-on: ubuntu-latest
     container:
-      image: swift:latest
+      image: swift:6.4
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
       - name: Download .swift-format config
         run: |
           apt-get update && apt-get install -y wget
