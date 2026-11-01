@@ -65,8 +65,9 @@ public struct AIXMDataset: Sendable, Codable {
     effectiveDate: Date = .now,
     errorCallback: ((any Error) -> Void)? = nil
   ) throws(AIXMError) {
+    // Streamed like a file: Linux's libxml2 rejects a document over 10 MB given in one piece.
     try self.init(
-      parser: XMLParser(data: data),
+      parser: XMLParser(stream: InputStream(data: data)),
       effectiveDate: effectiveDate,
       errorCallback: errorCallback
     )

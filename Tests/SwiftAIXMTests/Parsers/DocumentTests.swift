@@ -41,6 +41,14 @@ struct `Data set documents` {
   }
 
   @Test
+  func `reads a document over 10 MB from memory`() throws {
+    let padding = "<Dpn><txtName>\(String(repeating: "X", count: 100))</txtName></Dpn>"
+    let data = Data(OFMXDocument.snapshot(features: Array(repeating: padding, count: 100_000)).utf8)
+    try #require(data.count > 10_000_000)
+    #expect(try AIXMDataset(data: data).format == .OFMX)
+  }
+
+  @Test
   func `throws for a document that is not a data set`() {
     let error = #expect(throws: AIXMError.self) {
       try AIXMDataset(data: Data("<html><body/></html>".utf8))
