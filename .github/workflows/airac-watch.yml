@@ -9,7 +9,9 @@ name: AIRAC Watch
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    # Mondays. The sources publish weeks ahead of each Thursday cycle, so a weekly poll finds the next
+    # cycle within a week and the cycle in effect is never more than a week unchecked.
+    - cron: "0 6 * * 1"
   workflow_dispatch:
     inputs:
       cycle:
@@ -284,7 +286,7 @@ jobs:
 
       - name: Upload the report
         # Uploaded before anything reads it, and on failure too: this artifact is also the record
-        # that the cycle was checked, so a broken cycle is reported once rather than every day.
+        # that the cycle was checked, so a broken cycle is reported once rather than on every poll.
         if: always()
         uses: actions/upload-artifact@v7.0.2
         with:
