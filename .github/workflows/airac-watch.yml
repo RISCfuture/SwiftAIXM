@@ -9,7 +9,9 @@ name: AIRAC Watch
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    # Mondays. The sources publish weeks ahead of each Thursday cycle, so a weekly poll finds the next
+    # cycle within a week and the cycle in effect is never more than a week unchecked.
+    - cron: "0 6 * * 1"
   workflow_dispatch:
     inputs:
       cycle:
