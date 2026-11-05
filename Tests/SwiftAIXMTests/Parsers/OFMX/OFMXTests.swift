@@ -256,13 +256,19 @@ struct `OFMX records` {
     )
   }
 
-  @Test(arguments: ["", "YD"])
-  func `reports a distance without a known unit`(_ unit: String) throws {
-    let (direction, problems) = try Self.direction(Self.distance("TORA", "1400", unit: unit))
+  @Test(arguments: [
+    ("1400", "", RecordProblem.missing(feature: "Rdd", id: "XXAA|09/27|09", field: "uomDist")),
+    ("1400", "YD", .invalid(feature: "Rdd", id: "XXAA|09/27|09", field: "uomDist", value: "YD")),
+    ("FULL", "M", .invalid(feature: "Rdd", id: "XXAA|09/27|09", field: "valDist", value: "FULL"))
+  ])
+  func `reports the part of a distance that can't be read`(
+    _ value: String,
+    _ unit: String,
+    _ problem: RecordProblem
+  ) throws {
+    let (direction, problems) = try Self.direction(Self.distance("TORA", value, unit: unit))
     #expect(direction?.declaredDistances.TORA == nil)
-    #expect(
-      problems == [.invalid(feature: "Rdd", id: "XXAA|09/27|09", field: "valDist", value: "1400")]
-    )
+    #expect(problems == [problem])
   }
 
   @Test

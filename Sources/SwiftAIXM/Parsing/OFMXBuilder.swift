@@ -63,6 +63,16 @@ final class OFMXBuilder: FeatureBuilder {
     ValueParsing.length(node.value(value), unit: node.value(unit))
   }
 
+  /// Why a declared distance can't be read: its value when that isn't a number, and its
+  /// unit otherwise.
+  private static func unreadableDistance(_ node: XMLNode, id: String) -> AIXMRecordError {
+    let field = node.value("valDist").flatMap(Double.init) == nil ? "valDist" : "uomDist"
+    guard let text = node.value(field) else {
+      return .missingValue(feature: "Rdd", id: id, field: field)
+    }
+    return .invalidValue(feature: "Rdd", id: id, field: field, value: text)
+  }
+
   private static func location(_ node: XMLNode) -> Location? {
     guard let latitude = ValueParsing.hemisphereCoordinate(node.value("geoLat")),
       let longitude = ValueParsing.hemisphereCoordinate(node.value("geoLong"))
@@ -224,14 +234,7 @@ final class OFMXBuilder: FeatureBuilder {
       let rank = Self.dayPeriods.firstIndex(of: period)
     else { return }
     guard let value = Self.length(node, value: "valDist", unit: "uomDist") else {
-      report(
-        AIXMRecordError.invalidValue(
-          feature: "Rdd",
-          id: key,
-          field: "valDist",
-          value: node.value("valDist") ?? ""
-        )
-      )
+      report(Self.unreadableDistance(node, id: key))
       return
     }
 
